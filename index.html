@@ -1,204 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison du Sport</title>
-  <style>
-    /* Reset & Base */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif; }
-    html, body { height: 100%; width: 100%; overflow-x: hidden; background: #111; color: #fff; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison du Sport</title>
 
-    /* Smooth scroll */
-    html { scroll-behavior: smooth; }
+<!-- Import luxury fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
-    /* Top-right MDS logo text (appears on shop) */
-    .top-logo {
-      position: fixed;
-      top: 20px;
-      right: 30px;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: #bfa35f;
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 1000;
-    }
+<style>
+/* Reset & Base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; min-height: 100vh; overflow-x: hidden; font-family: 'Montserrat', sans-serif; background: #0f0f10; color: #fff; }
 
-    .top-logo.visible { opacity: 1; }
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
 
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, #1b1b2f 0%, #3a1f4c 50%, #bfa35f 100%);
-      overflow: hidden;
-      position: relative;
-    }
+/* Top-right logo */
+.top-logo {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #bfa35f;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 1000;
+}
+.top-logo.visible { opacity: 1; }
 
-    /* Animated floating shapes for luxury feel */
-    .hero::before, .hero::after {
-      content: '';
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.15;
-      animation: float 20s infinite linear;
-    }
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #1b1b2f, #3a1f4c);
+  position: relative;
+  overflow: hidden;
+}
+.hero-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffd700;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.5s forwards 0.5s;
+}
+.hero-subtext {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.5s forwards 1s;
+}
+.enter-button {
+  margin-top: 3rem;
+  padding: 1rem 3rem;
+  font-size: 1.3rem;
+  border: 2px solid #ffd700;
+  background: transparent;
+  color: #ffd700;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards 1.5s;
+  transition: all 0.3s ease;
+}
+.enter-button:hover { background: #ffd700; color: #0f0f10; box-shadow: 0 12px 30px rgba(255,215,0,0.5); }
 
-    .hero::before {
-      width: 400px; height: 400px; background: #bfa35f;
-      top: 20%; left: 10%;
-    }
-    .hero::after {
-      width: 300px; height: 300px; background: #ffdd99;
-      bottom: 10%; right: 15%;
-      animation-duration: 25s;
-    }
+/* Shop Section */
+.shop {
+  padding: 6rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2.5rem;
+  background: linear-gradient(135deg, #2b1b3a 0%, #5a3a5c 100%);
+  min-height: 100vh;
+  position: relative;
+}
+.item {
+  background: linear-gradient(135deg, #ffd700 0%, #f5e7d0 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  transition: all 0.5s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.item:hover img { transform: scale(1.05); }
+.item h3 { margin: 1rem 0 0.5rem; font-family: 'Playfair Display', serif; font-weight: 700; color: #111; font-size: 1.4rem; }
+.item p { font-weight: 500; font-size: 1.1rem; color: #222; margin-bottom: 1rem; }
 
-    @keyframes float {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-50px) translateX(30px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
+/* Footer */
+footer { padding: 2rem; text-align: center; background: #1b1b2f; color: #ffd700; font-size: 0.9rem; }
 
-    .hero-text {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #fdfaf5;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1.5s forwards 0.5s;
-    }
-
-    .hero-subtext {
-      font-size: 1.5rem;
-      margin-top: 1rem;
-      color: #ffd700;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1.5s forwards 1s;
-      font-weight: 400;
-    }
-
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .enter-button {
-      margin-top: 3rem;
-      padding: 1rem 3rem;
-      font-size: 1.2rem;
-      border: 2px solid #ffd700;
-      background: transparent;
-      color: #ffd700;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s forwards 1.5s;
-      transition: all 0.3s ease;
-      z-index: 10;
-    }
-
-    .enter-button:hover {
-      background: #ffd700;
-      color: #111;
-      box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
-    }
-
-    /* Shop Section */
-    .shop {
-      padding: 6rem 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2.5rem;
-      background: linear-gradient(135deg, #2b1b3a 0%, #5a3a5c 100%);
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .item {
-      background: linear-gradient(135deg, #ffd700 0%, #ffdd99 100%);
-      padding: 1.2rem;
-      text-align: center;
-      border-radius: 14px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-      cursor: pointer;
-      color: #111;
-    }
-
-    .item:hover {
-      transform: translateY(-12px) rotate(-1deg);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-      background: linear-gradient(135deg, #ffd700 0%, #f5e7d0 100%);
-    }
-
-    .item h3 { margin: 1rem 0 0.5rem; font-size: 1.3rem; font-weight: 700; }
-    .item p { font-size: 1rem; font-weight: 500; }
-
-    /* Footer */
-    footer {
-      padding: 2rem;
-      text-align: center;
-      background: #1b1b2f;
-      color: #ffd700;
-      font-size: 0.9rem;
-    }
-  </style>
+/* Animations */
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
 <body>
 
-  <!-- Top-right logo (MDS) -->
-  <div class="top-logo" id="topLogo">MDS</div>
+<!-- Top-right logo -->
+<div class="top-logo" id="topLogo">MDS</div>
 
-  <!-- Hero Section -->
-  <div class="hero">
-    <div class="hero-text">Welcome to Maison du Sport</div>
-    <div class="hero-subtext">Where elegance meets football</div>
-    <button class="enter-button" id="enter">Enter Maison</button>
+<!-- Hero Section -->
+<div class="hero">
+  <div class="hero-text">Welcome to Maison du Sport</div>
+  <div class="hero-subtext">Where elegance meets football</div>
+  <button class="enter-button" id="enter">Enter Maison</button>
+</div>
+
+<!-- Shop Section -->
+<section class="shop" id="shop">
+  <div class="item">
+    <img src="shirt1.png" alt="Premium Shirt">
+    <h3>Premium Shirt</h3>
+    <p>$20</p>
   </div>
+  <div class="item">
+    <img src="shirt2.png" alt="Classic Tee">
+    <h3>Classic Tee</h3>
+    <p>$20</p>
+  </div>
+  <div class="item">
+    <img src="shirt3.png" alt="Sport Jersey">
+    <h3>Sport Jersey</h3>
+    <p>$20</p>
+  </div>
+  <div class="item">
+    <img src="shirt4.png" alt="Minimal Top">
+    <h3>Minimal Top</h3>
+    <p>$20</p>
+  </div>
+  <div class="item">
+    <img src="shirt5.png" alt="Limited Edition">
+    <h3>Limited Edition</h3>
+    <p>$20</p>
+  </div>
+</section>
 
-  <!-- Shop Section -->
-  <section class="shop" id="shop">
-    <div class="item"><h3>Premium Shirt</h3><p>$20</p></div>
-    <div class="item"><h3>Classic Tee</h3><p>$20</p></div>
-    <div class="item"><h3>Sport Jersey</h3><p>$20</p></div>
-    <div class="item"><h3>Minimal Top</h3><p>$20</p></div>
-    <div class="item"><h3>Limited Edition</h3><p>$20</p></div>
-    <div class="item"><h3>Heritage Tee</h3><p>$20</p></div>
-    <div class="item"><h3>Luxury Shirt</h3><p>$20</p></div>
-    <div class="item"><h3>Sport Elite</h3><p>$20</p></div>
-  </section>
+<footer>© 2026 Maison du Sport</footer>
 
-  <footer>© 2026 Maison du Sport</footer>
+<script>
+const enterBtn = document.getElementById('enter');
+const topLogo = document.getElementById('topLogo');
+const shop = document.getElementById('shop');
+const items = document.querySelectorAll('.item');
 
-  <script>
-    const enterBtn = document.getElementById('enter');
-    const topLogo = document.getElementById('topLogo');
-    const shop = document.getElementById('shop');
-    const items = document.querySelectorAll('.item');
+enterBtn.addEventListener('click', () => {
+  shop.scrollIntoView({ behavior: 'smooth' });
+  topLogo.classList.add('visible');
 
-    enterBtn.addEventListener('click', () => {
-      shop.scrollIntoView({ behavior: 'smooth' });
-      topLogo.classList.add('visible');
-
-      // Staggered fade-in for items
-      items.forEach((item, index) => {
-        item.style.opacity = 0;
-        item.style.transform = 'translateY(40px)';
-        setTimeout(() => {
-          item.style.transition = 'all 0.6s ease';
-          item.style.opacity = 1;
-          item.style.transform = 'translateY(0)';
-        }, index * 150);
-      });
-    });
-  </script>
+  // Staggered fade-in for items
+  items.forEach((item, index) => {
+    item.style.opacity = 0;
+    item.style.transform = 'translateY(40px)';
+    setTimeout(() => {
+      item.style.transition = 'all 0.6s ease';
+      item.style.opacity = 1;
+      item.style.transform = 'translateY(0)';
+    }, index * 150);
+  });
+});
+</script>
 </body>
 </html>
 
