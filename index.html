@@ -9,57 +9,62 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif; }
     html, body { height: 100%; width: 100%; overflow-x: hidden; background: #fdfaf5; color: #000; }
 
-    /* Top-right logo */
+    /* Top-right MDS logo text (appears on shop) */
     .top-logo {
       position: fixed;
       top: 20px;
       right: 30px;
-      width: 120px; /* small elegant size */
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #bfa35f;
+      opacity: 0;
+      transition: opacity 1s ease;
       z-index: 1000;
-      transition: all 0.5s ease;
     }
+
+    .top-logo.visible { opacity: 1; }
 
     /* Hero Section */
     .hero {
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
+      text-align: center;
       background: linear-gradient(135deg, #fdfaf5 0%, #f7f4ef 100%);
       overflow: hidden;
     }
 
-    /* Blurred background logo */
-    .logo-bg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 500px; /* cinematic hero size */
-      max-width: 80%;
-      opacity: 0.25;
-      filter: blur(10px);
-      transition: all 1.5s ease-out;
+    .hero-text {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #222;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1.5s forwards 0.5s;
     }
 
-    /* Enter button */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .enter-button {
-      padding: 1rem 2.5rem;
+      margin-top: 3rem;
+      padding: 1rem 3rem;
       font-size: 1.2rem;
       border: 2px solid #bfa35f;
       background: transparent;
       color: #bfa35f;
       cursor: pointer;
-      z-index: 10;
       opacity: 0;
       transform: translateY(20px);
-      transition: all 1s ease-out 1.2s;
-    }
-
-    .enter-button.visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: fadeInUp 1s forwards 1.5s;
+      transition: all 0.3s ease;
     }
 
     .enter-button:hover {
@@ -92,8 +97,6 @@
       box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     }
 
-    .item img { width: 100%; border-radius: 12px; }
-
     .item h3 { margin: 1rem 0 0.5rem; font-size: 1.3rem; color: #222; font-weight: 600; }
 
     .item p { font-size: 1rem; color: #555; }
@@ -110,57 +113,51 @@
 </head>
 <body>
 
-  <!-- Top-right fixed logo -->
-  <img src="Maisondusport-file.png" alt="Maison du Sport" class="top-logo">
+  <!-- Top-right logo (MDS) -->
+  <div class="top-logo" id="topLogo">MDS</div>
 
   <!-- Hero Section -->
   <div class="hero">
-    <img src="Maisondusport-file.png" alt="Maison du Sport" class="logo-bg" id="logoBG">
+    <div class="hero-text">Welcome to Maison du Sport</div>
     <button class="enter-button" id="enter">Enter Maison</button>
   </div>
 
   <!-- Shop Section -->
   <section class="shop" id="shop">
     <div class="item">
-      <img src="https://via.placeholder.com/220x220.png?text=Shirt+1" alt="Shirt 1">
       <h3>Premium Shirt</h3>
       <p>$20</p>
     </div>
     <div class="item">
-      <img src="https://via.placeholder.com/220x220.png?text=Shirt+2" alt="Shirt 2">
       <h3>Classic Tee</h3>
       <p>$20</p>
     </div>
     <div class="item">
-      <img src="https://via.placeholder.com/220x220.png?text=Shirt+3" alt="Shirt 3">
       <h3>Sport Jersey</h3>
       <p>$20</p>
     </div>
     <div class="item">
-      <img src="https://via.placeholder.com/220x220.png?text=Shirt+4" alt="Shirt 4">
       <h3>Minimal Top</h3>
       <p>$20</p>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     © 2026 Maison du Sport
   </footer>
 
   <script>
-    // Animate hero
-    window.addEventListener('DOMContentLoaded', () => {
-      const enterBtn = document.getElementById('enter');
-      setTimeout(() => enterBtn.classList.add('visible'), 500);
+    const enterBtn = document.getElementById('enter');
+    const topLogo = document.getElementById('topLogo');
 
-      // Scroll to shop section
-      enterBtn.addEventListener('click', () => {
-        document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
-      });
+    // Scroll to shop section
+    enterBtn.addEventListener('click', () => {
+      document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+      topLogo.classList.add('visible'); // Show top-right logo
     });
   </script>
 </body>
 </html>
+
 
 
