@@ -3,91 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Shirt | Maison du Sport</title>
+<title>Maison du Sport</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin:0; padding:0; font-family:'Montserrat', sans-serif; background:#000; color:#fff;
-  }
-  a { text-decoration:none; color:#fff; }
-  header {
-    padding:2rem; display:flex; justify-content:space-between; align-items:center;
-    border-bottom:1px solid rgba(255,255,255,0.2);
-  }
-  header h1 { font-family:'Playfair Display', serif; font-size:1.8rem; }
-  header a { font-weight:600; transition:0.3s; }
-  header a:hover { color:#bfa35f; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:100%; height:100%; font-family:'Montserrat', sans-serif; background:#000; color:#fff; overflow:hidden; }
+  body.allow-scroll { overflow-y:auto; }
 
-  main {
-    padding:4rem 2rem; display:flex; flex-wrap:wrap; gap:3rem;
-    justify-content:center; align-items:flex-start;
-  }
-
-  .product-image {
-    flex:1 1 400px; max-width:500px;
-  }
-  .product-image img {
-    width:100%; border-radius:14px; object-fit:cover;
-  }
-
-  .product-info {
-    flex:1 1 400px; max-width:500px; display:flex; flex-direction:column; gap:1.5rem;
-  }
-
-  .product-info h2 {
+  /* Top-right MDS letters */
+  .mds-corner {
+    position: fixed; top:20px; right:30px;
     font-family:'Playfair Display', serif;
-    font-size:2.5rem; font-weight:700;
+    font-size:2rem; font-weight:700;
+    color:#fff; opacity:0;
+    z-index:1000;
+    display:flex; gap:4px;
+    transition: all 1s ease;
+  }
+  .mds-corner.visible { opacity:1; }
+
+  /* Hero */
+  .hero {
+    height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
+  }
+  .hero h1 { font-family:'Playfair Display', serif; font-size:6rem; letter-spacing:5px; color:#fff; margin-bottom:1rem; }
+  .hero h2 { font-size:2.5rem; letter-spacing:3px; color:#fff; margin-bottom:2rem; }
+  .enter-button {
+    padding:1rem 3rem; font-size:1.2rem; border:2px solid #fff; background:transparent; color:#fff; cursor:pointer; transition:all 0.3s ease;
+  }
+  .enter-button:hover { background:#fff; color:#000; box-shadow:0 8px 20px rgba(255,255,255,0.2); }
+
+  /* Products Intro */
+  .products-intro {
+    text-align:center; font-family:'Playfair Display', serif; font-size:2rem; font-weight:700;
+    color:#fff; margin-bottom:2rem; opacity:0;
   }
 
-  .product-info p.price {
-    font-size:1.5rem; font-weight:600; color:#bfa35f;
+  /* Shop Grid */
+  .shop {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2.5rem;
+    opacity:0; transform:translateY(40px); pointer-events:none; transition: all 0.8s ease; padding:2rem;
   }
+  .item {
+    background:#111; border-radius:14px; text-align:center; padding:1rem; transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor:pointer; display:flex; flex-direction:column; gap:12px;
+  }
+  .item:hover { transform:translateY(-10px) scale(1.02); box-shadow:0 12px 30px rgba(255,255,255,0.2); }
+  .item img { width:100%; height:280px; object-fit:cover; border-radius:10px; }
+  .item h3 { font-family:'Playfair Display', serif; font-size:1.5rem; font-weight:700; }
+  .item p { font-size:1.2rem; font-weight:600; color:#bfa35f; }
 
-  .product-info p.description {
-    font-size:1rem; color:#ccc; line-height:1.6;
-  }
+  /* Product Detail */
+  .product-detail { display:none; flex-wrap:wrap; justify-content:center; padding:4rem 2rem; gap:3rem; }
+  .product-detail img { flex:1 1 400px; max-width:500px; border-radius:14px; }
+  .product-info { flex:1 1 400px; max-width:500px; display:flex; flex-direction:column; gap:1.5rem; }
+  .product-info h2 { font-family:'Playfair Display', serif; font-size:2.5rem; font-weight:700; }
+  .product-info p.price { font-size:1.5rem; font-weight:600; color:#bfa35f; }
+  .product-info p.description { font-size:1rem; color:#ccc; line-height:1.6; }
+  .product-info button { padding:1rem 2rem; font-size:1.2rem; border:2px solid #bfa35f; background:transparent; color:#bfa35f; cursor:pointer; transition:all 0.3s ease; font-weight:700; }
+  .product-info button:hover { background:#bfa35f; color:#000; box-shadow:0 8px 20px rgba(255,191,95,0.3); }
 
-  .product-info button {
-    padding:1rem 2rem; font-size:1.2rem;
-    border:2px solid #bfa35f; background:transparent; color:#bfa35f;
-    cursor:pointer; transition:all 0.3s ease; font-weight:700;
-  }
-
-  .product-info button:hover {
-    background:#bfa35f; color:#000; box-shadow:0 8px 20px rgba(255,191,95,0.3);
-  }
-
-  footer {
-    text-align:center; padding:2rem; color:#777; font-size:0.9rem;
-    border-top:1px solid rgba(255,255,255,0.2);
-  }
+  footer { text-align:center; padding:2rem; color:#777; font-size:0.9rem; }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Maison du Sport</h1>
-  <a href="index.html">Back to Store</a>
-</header>
+<div class="mds-corner" id="mdsCorner">M D S</div>
 
-<main>
-  <div class="product-image">
-    <img src="shirt1.png" alt="Premium Shirt">
+<!-- Hero -->
+<div class="hero" id="hero">
+  <h1 id="welcome">WELCOME</h1>
+  <h2 id="maison">MAISON DU SPORT</h2>
+  <button class="enter-button" id="enter">Enter Maison</button>
+</div>
+
+<!-- Products Intro -->
+<div class="products-intro" id="productsIntro">The Maison — Where Football Meets Elegance</div>
+
+<!-- Shop Grid -->
+<section class="shop" id="shop">
+  <div class="item" data-name="Premium Shirt" data-price="$20" data-desc="High-quality breathable fabric, modern football style." data-img="shirt-file.png">
+    <img src="shirt-file.png" alt="Premium Shirt">
+    <h3>Premium Shirt</h3>
+    <p>$20</p>
   </div>
+  <div class="item" data-name="Classic Tee" data-price="$20" data-desc="Comfortable classic tee with clean design." data-img="shirt-file.png">
+    <img src="shirt-file.png" alt="Classic Tee">
+    <h3>Classic Tee</h3>
+    <p>$20</p>
+  </div>
+</section>
+
+<!-- Product Detail (hidden by default) -->
+<section class="product-detail" id="productDetail">
+  <img src="" alt="Product" id="detailImage">
   <div class="product-info">
-    <h2>Premium Shirt</h2>
-    <p class="price">$20</p>
-    <p class="description">
-      This Premium Shirt is made from high-quality breathable fabric, perfect for style and comfort on and off the field. Elegant design inspired by modern football culture.
-    </p>
+    <h2 id="detailName">Product Name</h2>
+    <p class="price" id="detailPrice">$0</p>
+    <p class="description" id="detailDesc">Product description goes here.</p>
     <button>Add to Cart</button>
+    <button id="backToStore">Back to Store</button>
   </div>
-</main>
+</section>
 
 <footer>© 2026 Maison du Sport</footer>
 
+<script>
+const enterBtn = document.getElementById('enter');
+const mdsCorner = document.getElementById('mdsCorner');
+const productsIntro = document.getElementById('productsIntro');
+const shop = document.getElementById('shop');
+const hero = document.getElementById('hero');
+const welcomeText = document.getElementById('welcome');
+const maisonText = document.getElementById('maison');
+
+const productDetail = document.getElementById('productDetail');
+const detailImage = document.getElementById('detailImage');
+const detailName = document.getElementById('detailName');
+const detailPrice = document.getElementById('detailPrice');
+const detailDesc = document.getElementById('detailDesc');
+const backToStore = document.getElementById('backToStore');
+
+// Enter Maison
+enterBtn.addEventListener('click', () => {
+  mdsCorner.classList.add('visible');
+  hero.style.display='none';
+  productsIntro.style.opacity = 1;
+  shop.style.opacity = 1;
+  shop.style.pointerEvents = 'auto';
+  document.body.classList.add('allow-scroll');
+});
+
+// Open Product Detail
+document.querySelectorAll('.shop .item').forEach(item => {
+  item.addEventListener('click', () => {
+    shop.style.display = 'none';
+    productsIntro.style.display = 'none';
+    productDetail.style.display = 'flex';
+    detailImage.src = item.dataset.img;
+    detailName.textContent = item.dataset.name;
+    detailPrice.textContent = item.dataset.price;
+    detailDesc.textContent = item.dataset.desc;
+  });
+});
+
+// Back to Store
+backToStore.addEventListener('click', () => {
+  productDetail.style.display = 'none';
+  shop.style.display = 'grid';
+  productsIntro.style.display = 'block';
+});
+</script>
 </body>
 </html>
+
 
 
 
