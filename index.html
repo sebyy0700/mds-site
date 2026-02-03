@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maison du Sport</title>
   <style>
-    /* Reset */
+    /* Reset & Base */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif; }
-    html, body { height: 100%; width: 100%; overflow-x: hidden; }
-
-    body { background: #fdfaf5; color: #000; }
+    html, body { height: 100%; width: 100%; overflow-x: hidden; background: #fdfaf5; color: #000; }
 
     /* Hero Section */
     .hero {
@@ -20,23 +18,30 @@
       align-items: center;
       text-align: center;
       background: linear-gradient(135deg, #fdfaf5 0%, #f7f4ef 100%);
+      position: relative;
     }
 
+    /* Logo Styling */
     .logo {
-      font-size: 6rem;
+      font-size: 5rem;
       font-weight: 900;
       letter-spacing: 0.3rem;
-      color: #bfa35f;
+      color: #bfa35f; /* Rich gold */
+      text-shadow: 0 4px 12px rgba(0,0,0,0.2);
       opacity: 0;
       transform: translateY(50px);
-      transition: all 1.2s ease-out;
+      transition: all 1.5s ease-out;
+      background: linear-gradient(90deg, #d4af37, #bfa35f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .logo.visible { opacity: 1; transform: translateY(0); }
 
+    /* Enter Button */
     .enter-button {
       margin-top: 3rem;
-      padding: 1rem 2rem;
+      padding: 1rem 2.5rem;
       font-size: 1.2rem;
       border: 2px solid #bfa35f;
       background: transparent;
@@ -49,33 +54,37 @@
 
     .enter-button.visible { opacity: 1; transform: translateY(0); }
 
-    .enter-button:hover { background: #bfa35f; color: #fdfaf5; }
+    .enter-button:hover {
+      background: #bfa35f;
+      color: #fdfaf5;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
 
     /* Shop Section */
     .shop {
-      padding: 5rem 2rem;
+      padding: 6rem 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
       background: #f7f4ef;
     }
 
     .item {
       background: #fff;
-      padding: 1rem;
+      padding: 1.2rem;
       text-align: center;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .item:hover { transform: translateY(-5px); }
+    .item:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
 
-    .item img { width: 100%; border-radius: 8px; }
+    .item img { width: 100%; border-radius: 12px; }
 
-    .item h3 { margin: 1rem 0 0.5rem; font-size: 1.2rem; color: #222; }
+    .item h3 { margin: 1rem 0 0.5rem; font-size: 1.3rem; color: #222; font-weight: 600; }
 
-    .item p { font-size: 1rem; color: #777; }
+    .item p { font-size: 1rem; color: #555; }
 
     /* Footer */
     footer {
@@ -88,47 +97,49 @@
   </style>
 </head>
 <body>
-  <!-- Hero -->
+  <!-- Hero Section -->
   <div class="hero">
-    <div class="logo" id="logo">MDS</div>
+   <img src="MDS-file.png" alt="Maison du Sport" class="logo" id="logo">
+
     <button class="enter-button" id="enter">Enter Maison</button>
   </div>
 
-  <!-- Shop -->
+  <!-- Shop Section -->
   <section class="shop" id="shop">
     <div class="item">
-      <img src="https://via.placeholder.com/200x200.png?text=Shirt+1" alt="Shirt 1">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+1" alt="Shirt 1">
       <h3>Premium Shirt</h3>
       <p>$20</p>
     </div>
     <div class="item">
-      <img src="https://via.placeholder.com/200x200.png?text=Shirt+2" alt="Shirt 2">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+2" alt="Shirt 2">
       <h3>Classic Tee</h3>
       <p>$20</p>
     </div>
     <div class="item">
-      <img src="https://via.placeholder.com/200x200.png?text=Shirt+3" alt="Shirt 3">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+3" alt="Shirt 3">
       <h3>Sport Jersey</h3>
       <p>$20</p>
     </div>
     <div class="item">
-      <img src="https://via.placeholder.com/200x200.png?text=Shirt+4" alt="Shirt 4">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+4" alt="Shirt 4">
       <h3>Minimal Top</h3>
       <p>$20</p>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     © 2026 Maison du Sport
   </footer>
 
   <script>
-    // Fade-in hero
+    // Hero fade-in animation
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => document.getElementById('logo').classList.add('visible'), 100);
+      setTimeout(() => document.getElementById('logo').classList.add('visible'), 200);
       setTimeout(() => document.getElementById('enter').classList.add('visible'), 1200);
 
-      // Scroll to shop section
+      // Scroll to shop section when entering
       const enterBtn = document.getElementById('enter');
       enterBtn.addEventListener('click', () => {
         document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
