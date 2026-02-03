@@ -100,7 +100,7 @@ padding:2rem;
 position:fixed;
 top:15px;
 right:25px;
-width:120px; /* increased for visibility */
+width:90px; /* bigger for visibility */
 }
 
 /* HERO MESSAGE */
@@ -114,13 +114,13 @@ font-size:2rem;
 .products{
 margin-top:60px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); /* smaller cards */
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:30px;
 }
 
 .card{
 background:#4e342e;
-padding:15px; /* smaller padding */
+padding:15px;
 border-radius:14px;
 text-align:center;
 cursor:pointer;
@@ -176,23 +176,50 @@ transition:.5s;
 z-index:20;
 }
 .cart h2{color:gold;margin-bottom:20px}
-.cart-item{
-margin-bottom:10px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+.cart-item{margin-bottom:10px}
 .cart-item button{
-padding:2px 6px;
-border:none;
+margin-left:10px;
 background:red;
 color:white;
+border:none;
+padding:2px 6px;
 cursor:pointer;
-border-radius:4px;
-font-size:0.8rem;
 }
 .cart.open{right:0}
 
+/* PAYMENT MODAL */
+#paymentModal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background: rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:50;
+}
+.payment-content{
+background:#3e2723;
+color:gold;
+padding:30px;
+border-radius:15px;
+text-align:center;
+min-width:300px;
+}
+.payment-content button{
+margin:10px;
+padding:10px 20px;
+cursor:pointer;
+border:none;
+border-radius:6px;
+transition:0.3s;
+}
+.payment-content button:hover{transform:scale(1.05);}
+.paypal-btn{background:#ffc439;color:black;}
+.moncash-btn{background:#ff8c00;color:white;}
+.close-modal{background:red;color:white;}
 </style>
 </head>
 
@@ -254,7 +281,7 @@ Quantity: <input type="number" id="quantity" value="1" min="1" style="width:60px
 </div>
 
 <button onclick="addToCart()">Add to Cart</button>
-<button onclick="buyNow()">Buy Now</button>
+<button id="buyNowBtn" onclick="openPaymentModal()">Buy Now</button>
 </section>
 
 <!-- CART PANEL -->
@@ -264,6 +291,21 @@ Quantity: <input type="number" id="quantity" value="1" min="1" style="width:60px
 <div style="margin-top:20px;font-weight:bold;" id="cartTotal">Total: $0</div>
 <button onclick="checkout()">Proceed to Checkout</button>
 </div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal">
+<div class="payment-content">
+<h2>Choose Payment Method</h2>
+<button class="paypal-btn" id="paypalPayment">PayPal / Card</button>
+<button class="moncash-btn" id="moncashPayment">MonCash</button>
+<br>
+<button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+<div id="paypal-button-container" style="margin-top:20px;"></div>
+</div>
+</div>
+
+<!-- PAYPAL SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
 
 <script>
 function enterSite(){
@@ -280,13 +322,11 @@ function openProduct(name, price, desc, image){
 document.getElementById("site").style.display="none";
 document.getElementById("productPage").style.display="block";
 
-// Fill product info dynamically
 document.getElementById("productImg").src = image;
 document.getElementById("productName").textContent = name;
 document.getElementById("productDesc").textContent = desc;
 document.getElementById("productPrice").textContent = "$" + price;
 
-// Save current product data for cart
 window.currentProduct = {name:name, price:price, image:image};
 }
 
@@ -298,12 +338,6 @@ updateCart();
 alert("Added to cart!");
 }
 
-// Remove item from cart
-function removeItem(index){
-cart.splice(index,1);
-updateCart();
-}
-
 function updateCart(){
 const cartItems = document.getElementById("cartItems");
 cartItems.innerHTML = "";
@@ -311,11 +345,20 @@ let total = 0;
 cart.forEach((item,index)=>{
 const div = document.createElement("div");
 div.className="cart-item";
-div.innerHTML = `${item.name} x${item.quantity} - $${item.price*item.quantity} <button onclick="removeItem(${index})">Cancel</button>`;
+div.textContent = `${item.name} x${item.quantity} - $${item.price*item.quantity}`;
+const btn = document.createElement("button");
+btn.textContent = "X";
+btn.onclick = function(){ removeCartItem(index); };
+div.appendChild(btn);
 cartItems.appendChild(div);
 total += item.price*item.quantity;
 });
 document.getElementById("cartTotal").textContent="Total: $"+total;
+}
+
+function removeCartItem(index){
+cart.splice(index,1);
+updateCart();
 }
 
 function toggleCart(){
@@ -324,19 +367,58 @@ document.getElementById("cart").classList.toggle("open");
 
 function checkout(){
 if(cart.length===0){alert("Your cart is empty!");return;}
-alert("Checkout system coming next. Total: $" + cart.reduce((acc,i)=>acc + i.price*i.quantity,0));
+openPaymentModal();
 }
 
-// BUY NOW function
-function buyNow(){
-if(cart.length===0){alert("Your cart is empty!");return;}
-let total = cart.reduce((acc,i)=>acc + i.price*i.quantity,0);
-// Redirect to MonCash (replace '#' with your link)
-window.location.href = `https://www.moncash.ht/?amount=${total}`;
+// PAYMENT MODAL
+function openPaymentModal(){
+document.getElementById("paymentModal").style.display="flex";
 }
+
+function closePaymentModal(){
+document.getElementById("paymentModal").style.display="none";
+document.getElementById("paypal-button-container").innerHTML = "";
+}
+
+// PAYPAL BUTTON
+document.getElementById("paypalPayment").addEventListener("click", function(){
+document.getElementById("paypal-button-container").innerHTML = "";
+paypal.Buttons({
+createOrder: function(data, actions){
+let total = cart.reduce((acc,i)=>acc + i.price*i.quantity,0);
+return actions.order.create({
+purchase_units: [{amount: {value: total.toFixed(2)}}]
+});
+},
+onApprove: function(data, actions){
+return actions.order.capture().then(function(details){
+alert('Transaction completed by '+details.payer.name.given_name);
+cart = [];
+updateCart();
+closePaymentModal();
+});
+}
+}).render('#paypal-button-container');
+});
+
+// MONCASH BUTTON
+document.getElementById("moncashPayment").addEventListener("click", function(){
+let total = cart.reduce((acc,i)=>acc + i.price*i.quantity,0);
+let phone = prompt("Enter your MonCash phone number:");
+if(phone){
+alert(`Redirecting to MonCash payment page for $${total} with phone ${phone}`);
+// Here you can add your real MonCash payment link integration
+// window.location.href = "https://payment-link.com?phone=" + phone + "&amount=" + total;
+cart = [];
+updateCart();
+closePaymentModal();
+}
+});
 </script>
+
 </body>
 </html>
+
 
 
 
