@@ -5,122 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maison du Sport</title>
 
-<!-- Import luxury fonts -->
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* Reset & Base */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; min-height: 100vh; overflow-x: hidden; font-family: 'Montserrat', sans-serif; background: #0f0f10; color: #fff; }
+/* Base Reset */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow-x:hidden; font-family:'Montserrat', sans-serif; scroll-behavior:smooth; background:#0f0f10; color:#fff; cursor:none; }
 
-/* Smooth scroll */
-html { scroll-behavior: smooth; }
+/* Custom Cursor */
+.cursor {
+  width: 12px; height: 12px; border-radius: 50%; background:#ffd700; position:fixed; pointer-events:none; transform:translate(-50%, -50%); z-index:2000; transition:transform 0.1s ease;
+}
 
-/* Top-right logo */
+/* Top Logo */
 .top-logo {
   position: fixed;
   top: 20px;
   right: 30px;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #bfa35f;
-  letter-spacing: 2px;
-  opacity: 0;
-  transition: opacity 1s ease;
-  z-index: 1000;
+  font-family:'Playfair Display', serif;
+  font-size:1.8rem;
+  font-weight:700;
+  color:#ffd700;
+  letter-spacing:2px;
+  opacity:0.3;
+  transition: all 1s ease;
+  z-index:1000;
 }
-.top-logo.visible { opacity: 1; }
+.top-logo.visible { opacity:1; }
 
 /* Hero Section */
 .hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(135deg, #1b1b2f, #3a1f4c);
-  position: relative;
-  overflow: hidden;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(135deg, #1b1b2f 0%, #3a1f4c 100%);
+  overflow:hidden;
+  position:relative;
 }
+.hero::before {
+  content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+  background:url('https://i.ibb.co/vkR86L7/particle.png') repeat;
+  opacity:0.15;
+  animation: particleMove 30s linear infinite;
+}
+@keyframes particleMove { 0%{background-position:0 0;} 100%{background-position:1000px 1000px;} }
+
 .hero-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 4rem;
-  font-weight: 700;
-  color: #ffd700;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 1.5s forwards 0.5s;
+  font-family:'Playfair Display', serif;
+  font-size:4rem; font-weight:700; color:#ffd700;
+  opacity:0; transform:translateY(30px);
+  animation:fadeInUp 1.5s forwards 0.5s;
 }
 .hero-subtext {
-  font-size: 1.5rem;
-  margin-top: 1rem;
-  font-weight: 400;
-  color: #fff;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 1.5s forwards 1s;
+  font-size:1.5rem; margin-top:1rem; font-weight:400;
+  color:#fdfaf5; opacity:0; transform:translateY(30px);
+  animation:fadeInUp 1.5s forwards 1s;
 }
 .enter-button {
-  margin-top: 3rem;
-  padding: 1rem 3rem;
-  font-size: 1.3rem;
-  border: 2px solid #ffd700;
-  background: transparent;
-  color: #ffd700;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s forwards 1.5s;
-  transition: all 0.3s ease;
+  margin-top:3rem; padding:1rem 3rem; font-size:1.3rem; border:2px solid #ffd700;
+  background:transparent; color:#ffd700; cursor:pointer; opacity:0; transform:translateY(20px);
+  animation:fadeInUp 1s forwards 1.5s; transition:all 0.3s ease;
 }
-.enter-button:hover { background: #ffd700; color: #0f0f10; box-shadow: 0 12px 30px rgba(255,215,0,0.5); }
+.enter-button:hover { background:#ffd700; color:#0f0f10; box-shadow:0 12px 30px rgba(255,215,0,0.5); }
 
 /* Shop Section */
 .shop {
-  padding: 6rem 4rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2.5rem;
-  background: linear-gradient(135deg, #2b1b3a 0%, #5a3a5c 100%);
-  min-height: 100vh;
-  position: relative;
+  padding:6rem 4rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:2.5rem;
+  background:linear-gradient(135deg, #2b1b3a 0%, #5a3a5c 100%);
+  min-height:100vh; position:relative;
 }
 .item {
-  background: linear-gradient(135deg, #ffd700 0%, #f5e7d0 100%);
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-  transition: all 0.5s ease;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background:linear-gradient(135deg, #ffd700 0%, #f5e7d0 100%);
+  border-radius:16px; overflow:hidden; position:relative; box-shadow:0 12px 25px rgba(0,0,0,0.25);
+  transition:all 0.5s ease; cursor:pointer; display:flex; flex-direction:column; align-items:center;
 }
 .item img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  width:100%; height:220px; object-fit:cover; transition:transform 0.5s ease;
 }
-.item:hover img { transform: scale(1.05); }
-.item h3 { margin: 1rem 0 0.5rem; font-family: 'Playfair Display', serif; font-weight: 700; color: #111; font-size: 1.4rem; }
-.item p { font-weight: 500; font-size: 1.1rem; color: #222; margin-bottom: 1rem; }
+.item:hover img { transform:scale(1.05); }
+.item h3 { margin:1rem 0 0.5rem; font-family:'Playfair Display', serif; font-weight:700; color:#111; font-size:1.4rem; }
+.item p { font-weight:500; font-size:1.1rem; color:#222; margin-bottom:1rem; }
+.item .overlay {
+  position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.1);
+  opacity:0; transition:opacity 0.4s ease;
+}
+.item:hover .overlay { opacity:1; }
 
 /* Footer */
-footer { padding: 2rem; text-align: center; background: #1b1b2f; color: #ffd700; font-size: 0.9rem; }
+footer { padding:2rem; text-align:center; background:#1b1b2f; color:#ffd700; font-size:0.9rem; }
 
 /* Animations */
-@keyframes fadeInUp {
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeInUp { to {opacity:1; transform:translateY(0);} }
 </style>
 </head>
 <body>
 
-<!-- Top-right logo -->
+<div class="cursor" id="cursor"></div>
 <div class="top-logo" id="topLogo">MDS</div>
 
 <!-- Hero Section -->
@@ -133,26 +117,31 @@ footer { padding: 2rem; text-align: center; background: #1b1b2f; color: #ffd700;
 <!-- Shop Section -->
 <section class="shop" id="shop">
   <div class="item">
+    <div class="overlay"></div>
     <img src="shirt1.png" alt="Premium Shirt">
     <h3>Premium Shirt</h3>
     <p>$20</p>
   </div>
   <div class="item">
+    <div class="overlay"></div>
     <img src="shirt2.png" alt="Classic Tee">
     <h3>Classic Tee</h3>
     <p>$20</p>
   </div>
   <div class="item">
+    <div class="overlay"></div>
     <img src="shirt3.png" alt="Sport Jersey">
     <h3>Sport Jersey</h3>
     <p>$20</p>
   </div>
   <div class="item">
+    <div class="overlay"></div>
     <img src="shirt4.png" alt="Minimal Top">
     <h3>Minimal Top</h3>
     <p>$20</p>
   </div>
   <div class="item">
+    <div class="overlay"></div>
     <img src="shirt5.png" alt="Limited Edition">
     <h3>Limited Edition</h3>
     <p>$20</p>
@@ -166,23 +155,29 @@ const enterBtn = document.getElementById('enter');
 const topLogo = document.getElementById('topLogo');
 const shop = document.getElementById('shop');
 const items = document.querySelectorAll('.item');
+const cursor = document.getElementById('cursor');
 
 enterBtn.addEventListener('click', () => {
-  shop.scrollIntoView({ behavior: 'smooth' });
+  shop.scrollIntoView({ behavior:'smooth' });
   topLogo.classList.add('visible');
 
-  // Staggered fade-in for items
+  // Staggered fade-in
   items.forEach((item, index) => {
-    item.style.opacity = 0;
-    item.style.transform = 'translateY(40px)';
+    item.style.opacity=0; item.style.transform='translateY(40px)';
     setTimeout(() => {
-      item.style.transition = 'all 0.6s ease';
-      item.style.opacity = 1;
-      item.style.transform = 'translateY(0)';
-    }, index * 150);
+      item.style.transition='all 0.6s ease';
+      item.style.opacity=1; item.style.transform='translateY(0)';
+    }, index*150);
   });
 });
+
+// Cursor movement
+document.addEventListener('mousemove', e => {
+  cursor.style.left=e.clientX+'px';
+  cursor.style.top=e.clientY+'px';
+});
 </script>
+
 </body>
 </html>
 
