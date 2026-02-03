@@ -1,48 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Maison du Sport</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Montserrat,sans-serif;background:#000;color:white;overflow:hidden}
-h1,h2,h3{font-family:'Playfair Display',serif}
+* {margin:0;padding:0;box-sizing:border-box}
+body {font-family:Montserrat, sans-serif; overflow:hidden;}
 
-/* INTRO */
-.intro{
-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;background:#000;
+h1,h2,h3 {font-family:'Playfair Display', serif}
+
+/* INTRO SCREEN */
+.intro {
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:#000;
+color:white;
+position:relative;
 }
+
 .intro::before{
-content:"";position:absolute;inset:0;background:url("MDS-file.png") center/contain no-repeat;opacity:0.12;
+content:"";
+position:absolute;
+inset:0;
+background:url("MDS-file.png") center/contain no-repeat;
+opacity:0.15;
 }
+
 .intro h1{font-size:4rem;z-index:2}
 .enter-btn{
-margin-top:2rem;padding:1rem 3rem;border:2px solid gold;background:none;color:gold;font-size:1.2rem;cursor:pointer;z-index:2
+margin-top:2rem;
+padding:1rem 3rem;
+border:2px solid gold;
+background:none;
+color:gold;
+font-size:1.2rem;
+cursor:pointer;
+z-index:2;
 }
 
-/* MAIN STORE */
-.store{display:none;background:#3e2723;color:gold;min-height:100vh;padding:2rem}
-.top-logo{position:fixed;top:15px;right:25px;width:60px}
-.statement{text-align:center;margin-top:80px;font-size:2rem}
-.products{margin-top:60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px}
-.card{background:#4e342e;padding:20px;border-radius:14px;text-align:center;cursor:pointer;transition:.3s}
+/* MAIN SITE */
+.site{
+display:none;
+background:#3e2723; /* DARK SIENNA */
+color:gold;
+min-height:100vh;
+padding:2rem;
+}
+
+/* TOP LOGO */
+.top-logo{
+position:fixed;
+top:15px;
+right:25px;
+width:60px;
+}
+
+/* HERO MESSAGE */
+.statement{
+margin-top:80px;
+text-align:center;
+font-size:2rem;
+}
+
+/* PRODUCTS */
+.products{
+margin-top:60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:40px;
+}
+
+.card{
+background:#4e342e;
+padding:20px;
+border-radius:14px;
+text-align:center;
+cursor:pointer;
+transition:.3s;
+}
+
 .card:hover{transform:scale(1.05)}
 .card img{width:100%;border-radius:12px}
 
-/* PRODUCT PAGE */
-.product-page{display:none;background:#3e2723;color:gold;min-height:100vh;padding:40px}
-.product-container{display:flex;gap:40px;flex-wrap:wrap}
-.product-container img{width:400px;border-radius:12px}
-button{padding:12px 25px;background:gold;color:#3e2723;border:none;margin-top:15px;cursor:pointer}
+/* CONTACT */
+.contact{
+margin-top:80px;
+text-align:center;
+font-size:1.1rem;
+}
 
-/* CART */
-.cart-page{display:none;background:#3e2723;color:gold;min-height:100vh;padding:40px}
-
-.contact{text-align:center;margin-top:80px}
 </style>
 </head>
 
@@ -51,11 +105,12 @@ button{padding:12px 25px;background:gold;color:#3e2723;border:none;margin-top:15
 <!-- INTRO -->
 <section class="intro" id="intro">
 <h1>Welcome to Maison du Sport</h1>
-<button class="enter-btn" onclick="enterMaison()">Enter the Maison</button>
+<button class="enter-btn" onclick="enterSite()">Enter the Maison</button>
 </section>
 
-<!-- STORE -->
-<section class="store" id="store">
+<!-- MAIN SITE -->
+<section class="site" id="site">
+
 <img src="Maisondusport-file.png" class="top-logo">
 
 <div class="statement">A place where football meets elegance</div>
@@ -72,81 +127,24 @@ button{padding:12px 25px;background:gold;color:#3e2723;border:none;margin-top:15
 <h2>Contact Maison du Sport</h2>
 <p>Email: contact@maisondusport.com</p>
 </div>
-</section>
 
-<!-- PRODUCT VIEW -->
-<section class="product-page" id="productPage">
-<button onclick="goStore()">← Back to Store</button>
-<h1>Luxury Match Jersey</h1>
-<div class="product-container">
-<img src="shirt-file.png.jpeg">
-<div>
-<h2>$40</h2>
-<p>Premium football elegance jersey designed for performance and luxury presence.</p>
-<button onclick="addToCart()">Add to Cart</button>
-<button onclick="goCart()">Buy Now</button>
-</div>
-</div>
-</section>
-
-<!-- CART -->
-<section class="cart-page" id="cartPage">
-<button onclick="goStore()">← Continue Shopping</button>
-<h1>Your Cart</h1>
-<div id="cartItems"></div>
-<button onclick="buy()">Buy Now</button>
 </section>
 
 <script>
-function enterMaison(){
+function enterSite(){
 document.getElementById("intro").style.display="none";
 document.body.style.overflow="auto";
-document.getElementById("store").style.display="block";
+document.getElementById("site").style.display="block";
 }
 
 function openProduct(){
-document.getElementById("store").style.display="none";
-document.getElementById("productPage").style.display="block";
-}
-
-function goStore(){
-document.getElementById("productPage").style.display="none";
-document.getElementById("cartPage").style.display="none";
-document.getElementById("store").style.display="block";
-}
-
-function goCart(){
-document.getElementById("productPage").style.display="none";
-document.getElementById("cartPage").style.display="block";
-renderCart();
-}
-
-function addToCart(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-cart.push("Luxury Match Jersey - $40");
-localStorage.setItem("cart", JSON.stringify(cart));
-alert("Added to cart!");
-}
-
-function renderCart(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let container = document.getElementById("cartItems");
-container.innerHTML="";
-cart.forEach(item=>{
-let p=document.createElement("p");
-p.innerText=item;
-container.appendChild(p);
-});
-}
-
-function buy(){
-alert("Order placed! Payment system comes next.");
-localStorage.removeItem("cart");
-renderCart();
+localStorage.setItem("product","Luxury Match Jersey");
+window.location.href="product.html";
 }
 </script>
 
 </body>
 </html>
+
 
 
