@@ -11,6 +11,7 @@
 * {margin:0;padding:0;box-sizing:border-box}
 body {font-family:Montserrat, sans-serif; overflow:hidden;}
 
+/* Fonts */
 h1,h2,h3 {font-family:'Playfair Display', serif}
 
 /* INTRO SCREEN */
@@ -21,12 +22,46 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-background:#000;
+background:#0b0b0b;
 color:white;
 position:relative;
+overflow:hidden;
 }
 
-.intro h1{font-size:4rem;z-index:2}
+.intro::before{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at center, rgba(255,215,0,0.03), #0b0b0b 80%);
+z-index:0;
+}
+
+/* Animated glow on the text */
+.intro h1{
+font-size:4rem;
+z-index:2;
+color:gold;
+background: linear-gradient(45deg, #ffd700, #fff8dc, #ffd700);
+background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
+animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer{
+0%{background-position: -400px 0;}
+100%{background-position: 400px 0;}
+}
+
+.intro h2{
+font-size:1.5rem;
+font-weight:300;
+color:rgba(255,215,0,0.8);
+margin-top:15px;
+opacity:0;
+animation: fadeIn 2s forwards 1s;
+}
+
 .enter-btn{
 margin-top:2rem;
 padding:1rem 3rem;
@@ -36,6 +71,19 @@ color:gold;
 font-size:1.2rem;
 cursor:pointer;
 z-index:2;
+opacity:0;
+animation: fadeIn 2s forwards 1.5s;
+transition:0.3s;
+}
+.enter-btn:hover{
+background:gold;
+color:black;
+transform:scale(1.05);
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 /* MAIN SITE */
@@ -130,6 +178,7 @@ z-index:20;
 .cart h2{color:gold;margin-bottom:20px}
 .cart-item{margin-bottom:10px}
 .cart.open{right:0}
+
 </style>
 </head>
 
@@ -138,6 +187,7 @@ z-index:20;
 <!-- INTRO -->
 <section class="intro" id="intro">
 <h1>Welcome to Maison du Sport</h1>
+<h2>Exclusive Football Elegance</h2>
 <button class="enter-btn" onclick="enterSite()">Enter the Maison</button>
 </section>
 
@@ -149,22 +199,22 @@ z-index:20;
 <div class="statement">A place where football meets elegance</div>
 
 <div class="products">
-<div class="card" onclick="openProduct()">
+<div class="card" onclick="openProduct('Luxury Match Jersey', 40, 'Premium football-inspired luxury fabric.', 'shirt-file.png.jpeg')">
 <img src="shirt-file.png.jpeg">
 <h3>Luxury Match Jersey</h3>
 <p>$40</p>
 </div>
-<div class="card" onclick="openProduct()">
+<div class="card" onclick="openProduct('Elite Training Tee', 35, 'High-quality training tee for elite players.', 'shirt-file.png.jpeg')">
 <img src="shirt-file.png.jpeg">
 <h3>Elite Training Tee</h3>
 <p>$35</p>
 </div>
-<div class="card" onclick="openProduct()">
+<div class="card" onclick="openProduct('Football Luxe', 50, 'Luxury football tee for premium matches.', 'shirt-file.png.jpeg')">
 <img src="shirt-file.png.jpeg">
 <h3>Football Luxe</h3>
 <p>$50</p>
 </div>
-<div class="card" onclick="openProduct()">
+<div class="card" onclick="openProduct('Minimal Pro Fit', 30, 'Sleek minimal fit for comfort and style.', 'shirt-file.png.jpeg')">
 <img src="shirt-file.png.jpeg">
 <h3>Minimal Pro Fit</h3>
 <p>$30</p>
@@ -208,49 +258,44 @@ document.body.style.overflow="auto";
 document.getElementById("site").style.display="block";
 }
 
-// Product Data
-const productData = {
-  name: "Luxury Match Jersey",
-  price: 40,
-  image: "shirt-file.png.jpeg",
-  desc: "Premium football-inspired luxury fabric for elegance and performance."
-};
-
-// Open product page
-function openProduct(){
-document.getElementById("site").style.display="none";
-document.getElementById("productPage").style.display="block";
-
-// Fill product info
-document.getElementById("productImg").src = productData.image;
-document.getElementById("productName").textContent = productData.name;
-document.getElementById("productDesc").textContent = productData.desc;
-document.getElementById("productPrice").textContent = "$" + productData.price;
-}
-
 // CART LOGIC
 let cart = [];
 
+// Open product page dynamically
+function openProduct(name, price, desc, image){
+document.getElementById("site").style.display="none";
+document.getElementById("productPage").style.display="block";
+
+// Fill product info dynamically
+document.getElementById("productImg").src = image;
+document.getElementById("productName").textContent = name;
+document.getElementById("productDesc").textContent = desc;
+document.getElementById("productPrice").textContent = "$" + price;
+
+// Save current product data for cart
+window.currentProduct = {name:name, price:price, image:image};
+}
+
 function addToCart(){
-  const qty = parseInt(document.getElementById("quantity").value);
-  const item = {...productData, quantity: qty};
-  cart.push(item);
-  updateCart();
-  alert("Added to cart!");
+const qty = parseInt(document.getElementById("quantity").value);
+const item = {...window.currentProduct, quantity:qty};
+cart.push(item);
+updateCart();
+alert("Added to cart!");
 }
 
 function updateCart(){
-  const cartItems = document.getElementById("cartItems");
-  cartItems.innerHTML = "";
-  let total = 0;
-  cart.forEach(item=>{
-    const div = document.createElement("div");
-    div.className="cart-item";
-    div.textContent = `${item.name} x${item.quantity} - $${item.price*item.quantity}`;
-    cartItems.appendChild(div);
-    total += item.price*item.quantity;
-  });
-  document.getElementById("cartTotal").textContent="Total: $"+total;
+const cartItems = document.getElementById("cartItems");
+cartItems.innerHTML = "";
+let total = 0;
+cart.forEach(item=>{
+const div = document.createElement("div");
+div.className="cart-item";
+div.textContent = `${item.name} x${item.quantity} - $${item.price*item.quantity}`;
+cartItems.appendChild(div);
+total += item.price*item.quantity;
+});
+document.getElementById("cartTotal").textContent="Total: $"+total;
 }
 
 function toggleCart(){
@@ -261,11 +306,11 @@ function checkout(){
 if(cart.length===0){alert("Your cart is empty!");return;}
 alert("Checkout system coming next. Total: $" + cart.reduce((acc,i)=>acc + i.price*i.quantity,0));
 }
-</script>
 
+</script>
 </body>
 </html>
-l>
+
 
 
 
