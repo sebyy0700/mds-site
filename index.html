@@ -4,9 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Maison du Sport — Digital Showroom</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
 /* RESET & BASE */
 * {margin:0;padding:0;box-sizing:border-box;}
@@ -39,8 +37,8 @@ overflow:hidden;
 font-size:3rem;
 font-family:'Playfair Display', serif;
 margin-bottom:2rem;
-animation:fadeIn 2s ease forwards;
 opacity:0;
+animation:fadeIn 2s forwards;
 }
 
 .enter-btn{
@@ -51,8 +49,9 @@ color:var(--white);
 font-size:1.2rem;
 cursor:pointer;
 border-radius:8px;
-animation:fadeIn 2s ease forwards 1s;
+margin-top:2rem;
 opacity:0;
+animation:fadeIn 2s forwards 1s;
 transition:0.3s;
 }
 .enter-btn:hover{
@@ -122,6 +121,7 @@ display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:30px;
 margin-bottom:100px;
+pointer-events:none;
 }
 
 .card{
@@ -132,7 +132,6 @@ text-align:center;
 position:relative;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
 transition:transform 0.3s;
-pointer-events:none;
 }
 
 .card img{width:100%;border-radius:10px;}
@@ -207,6 +206,7 @@ font-style:italic;
 <button class="enter-btn" onclick="enterSite()">Enter the Maison</button>
 </section>
 
+<!-- Curtain panels -->
 <div class="curtain-left"></div>
 <div class="curtain-right"></div>
 
@@ -266,10 +266,7 @@ font-style:italic;
 
 <script>
 function enterSite(){
-  // Hide intro
-  document.getElementById("intro").style.display="none";
-
-  // Curtain animation
+  // Curtain open sequence
   const left = document.querySelector(".curtain-left");
   const right = document.querySelector(".curtain-right");
 
@@ -278,15 +275,18 @@ function enterSite(){
   left.style.width="0%";
   right.style.width="0%";
 
+  // Delay showing main site after curtain
   setTimeout(()=>{
     document.getElementById("site").style.display="block";
     document.body.style.overflow="auto";
+    document.getElementById("intro").style.display="none";
   },1000);
 }
 </script>
 
 </body>
 </html>
+
 >
 
 
