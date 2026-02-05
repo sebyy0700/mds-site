@@ -1,272 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maison du Sport — Digital Maison</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Maison du Sport — Digital Showroom</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+/* Reset & Base */
+* {margin:0;padding:0;box-sizing:border-box;}
+body {font-family:Montserrat, sans-serif; overflow:hidden; background:#111111; color:#f4f1eb;}
+h1,h2,h3 {font-family:'Playfair Display', serif; color:#f4f1eb;}
 
-/* ================= GLOBAL ================= */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:Montserrat, sans-serif;
-background:#f6f1e8;
-color:#0e1a2b;
-overflow:hidden;
-scroll-behavior:smooth;
-}
-h1,h2,h3{font-family:'Playfair Display',serif;letter-spacing:1px}
-
-/* ================= INTRO CINEMA ================= */
-.intro{
-position:fixed;
-inset:0;
-background:#0e1a2b;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-color:white;
-z-index:10;
-overflow:hidden;
+/* ===== CINEMATIC INTRO ===== */
+.intro {
+height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; overflow:hidden; background:#0a0a0a;
 }
 
-/* subtle luxury light */
-.intro::before{
+.intro::before {
 content:"";
-position:absolute;
-width:200%;
-height:200%;
-background:radial-gradient(circle at center,rgba(255,255,255,0.08),transparent 60%);
-animation:drift 18s linear infinite;
+position:absolute; inset:0;
+background: linear-gradient(120deg, #111111, #1b1b1b);
+z-index:-2;
 }
 
-@keyframes drift{
-from{transform:rotate(0deg)}
-to{transform:rotate(360deg)}
-}
-
-/* glowing title */
 .intro h1{
-font-size:3.8rem;
-text-align:center;
-opacity:0;
-animation:fadeUp 2s forwards 0.5s;
+font-size:4rem; font-weight:700; opacity:0; animation:fadeInGlow 2s forwards 0.5s; letter-spacing:2px;
+color:#f4f1eb; text-shadow: 0 0 10px #bfa25e, 0 0 20px #bfa25e, 0 0 30px #bfa25e;
 }
 
-.intro h1 span{
-display:inline-block;
-position:relative;
-}
-
-.intro h1 span::after{
-content:"";
-position:absolute;
-left:-10%;
-bottom:-8px;
-width:120%;
-height:2px;
-background:white;
-opacity:0.3;
-animation:underline 3s infinite alternate;
-}
-
-@keyframes underline{
-from{transform:scaleX(0.6)}
-to{transform:scaleX(1)}
+.intro h2{
+margin-top:20px; font-weight:400; font-size:1.5rem; opacity:0; animation:fadeInGlow 2s forwards 1.5s; color:#f4f1eb; text-shadow: 0 0 8px #bfa25e;
 }
 
 .enter-btn{
-margin-top:3rem;
-padding:1rem 3.5rem;
-border:1px solid white;
-background:none;
-color:white;
-font-size:1.1rem;
-letter-spacing:2px;
-cursor:pointer;
-opacity:0;
-animation:fadeUp 2s forwards 2s;
-transition:.4s;
+margin-top:3rem; padding:1rem 3rem; border:2px solid #bfa25e; background:none; color:#f4f1eb; font-size:1.2rem; cursor:pointer;
+opacity:0; animation:fadeInUp 2s forwards 2.5s, pulseGlow 2s infinite 4.5s; border-radius:8px; transition:0.3s;
 }
+.enter-btn:hover {background:#bfa25e; color:#111111; transform:scale(1.05);}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0px #bfa25e}50%{box-shadow:0 0 15px #bfa25e}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);} to{opacity:1; transform:translateY(0);}}
+@keyframes fadeInGlow{from{opacity:0;}to{opacity:1;}}
 
-.enter-btn:hover{
-background:white;
-color:#0e1a2b;
+/* Curtain Split Animation */
+.curtain-left, .curtain-right {
+position:fixed; top:0; width:50%; height:100%; background:#0a0a0a; z-index:999; transition: all 1.5s ease;
 }
+.curtain-left {left:0;}
+.curtain-right {right:0;}
 
-/* curtain animation */
-.curtain{
-position:fixed;
-top:0;
-width:50%;
-height:100%;
-background:#0e1a2b;
-z-index:9;
-transition:1.6s cubic-bezier(.77,0,.18,1);
+/* ===== MAIN SITE ===== */
+.site{display:none; padding:2rem; max-width:1200px; margin:0 auto; scroll-behavior:smooth; background:#1b1b1b;}
+
+/* Top logo */
+.top-logo{position:fixed; top:15px; left:20px; width:120px; transition: all 1s ease; z-index:10;}
+
+/* Scroll Nav Bar */
+.navbar{
+position:fixed; top:0; right:0; background:rgba(17,17,17,0.95); display:flex; gap:1rem; padding:10px 20px; border-left:1px solid #bfa25e; border-bottom:1px solid #bfa25e; border-radius:0 0 0 8px; font-weight:600; display:none; z-index:10;
 }
-.left-curtain{left:0}
-.right-curtain{right:0}
+.navbar a{text-decoration:none; color:#f4f1eb; padding:6px 12px; transition:0.3s; border-radius:6px;}
+.navbar a:hover{background:#bfa25e; color:#111111;}
 
-.open .left-curtain{transform:translateX(-100%)}
-.open .right-curtain{transform:translateX(100%)}
+/* Statement */
+.statement{margin-top:100px; text-align:center; font-size:2rem; line-height:1.4; color:#f4f1eb;}
 
-/* ================= MAIN SITE ================= */
-.site{
-opacity:0;
-transition:opacity 1.5s ease;
-padding:60px 10%;
-max-width:1300px;
-margin:auto;
-}
+/* Warning box */
+.warning-box{position:fixed; top:20px; left:20px; background:#2e1f1a; color:#bfa25e; padding:8px 12px; font-size:0.85rem; border-radius:6px; z-index:10;}
 
-.site.visible{opacity:1}
+/* Products */
+.products{margin-top:60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; pointer-events:none;}
+.card{background:#2e1f1a; padding:20px; border-radius:14px; text-align:center; position:relative; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s;}
+.card:hover{transform:scale(1.03);}
+.card img{width:100%; border-radius:10px;}
+.card::after{content:"Exclusively Online"; position:absolute; top:12px; left:12px; background:#bfa25e; color:#1b1b1b; padding:4px 8px; font-size:0.75rem; border-radius:5px; font-family:'Playfair Display', serif;}
 
-/* logo */
-.logo{
-position:fixed;
-top:25px;
-left:40px;
-width:130px;
-opacity:0.85;
-}
+/* Maison Gallery */
+.maison-gallery{margin-top:100px; text-align:center;}
+.maison-gallery h2{margin-bottom:20px;}
+.maison-gallery .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;}
+.maison-gallery .gallery .concept-card{background:#2e1f1a; padding:15px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.3); position:relative; transition: transform 0.3s; pointer-events:none;}
+.concept-card:hover{transform:scale(1.02);}
+.concept-card::after{content:"[Concept]"; position:absolute; top:8px; left:8px; font-size:0.7rem; color:#bfa25e; font-style:italic;}
 
-/* heading statement */
-.statement{
-margin-top:120px;
-font-size:2.2rem;
-text-align:center;
-margin-bottom:50px;
-}
+/* Section Titles */
+.section{margin-top:80px; text-align:center; padding:40px 10%;}
+.section h2{font-size:2rem; margin-bottom:20px;}
+.lux-line{height:1px; background:#bfa25e; width:60%; margin:0 auto 20px auto;}
 
-/* showcase notice */
-.notice{
-border:1px solid #0e1a2b;
-display:inline-block;
-padding:10px 18px;
-font-size:0.85rem;
-letter-spacing:1px;
-margin-bottom:70px;
-}
-
-/* ================= PRODUCTS ================= */
-.section-title{
-text-align:center;
-font-size:2rem;
-margin-bottom:40px;
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:50px;
-margin-bottom:120px;
-}
-
-.card{
-background:white;
-padding:25px;
-border-radius:6px;
-box-shadow:0 15px 40px rgba(0,0,0,0.08);
-text-align:center;
-position:relative;
-}
-
-.card img{
-width:100%;
-border-radius:4px;
-margin-bottom:15px;
-}
-
-.card span{
-position:absolute;
-top:12px;
-left:12px;
-font-size:0.65rem;
-letter-spacing:1px;
-background:#0e1a2b;
-color:white;
-padding:4px 8px;
-}
-
-/* ================= MAISON GALLERY ================= */
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:60px;
-margin-bottom:120px;
-}
-
-/* ================= CONTACT ================= */
-.contact{
-text-align:center;
-margin-bottom:120px;
-line-height:2;
-font-size:1rem;
-}
-
-/* ================= ANIMATIONS ================= */
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
-
+/* Footer */
+footer{margin-top:120px; text-align:center; padding:40px 10px; border-top:1px solid #bfa25e; font-size:0.9rem; line-height:1.6; color:#f4f1eb;}
 </style>
 </head>
 
 <body>
 
-<div class="curtain left-curtain"></div>
-<div class="curtain right-curtain"></div>
-
+<!-- INTRO -->
 <section class="intro" id="intro">
-<h1><span>Welcome to Maison du Sport</span></h1>
-<button class="enter-btn" onclick="enterMaison()">ENTER THE MAISON</button>
+<h1>Welcome to Maison du Sport</h1>
+<h2>Click below to enter the Maison</h2>
+<button class="enter-btn" onclick="enterMaison()">Enter the Maison</button>
 </section>
 
-<img src="Maisondusport-file.png" class="logo">
+<!-- Curtains -->
+<div class="curtain-left" id="curtainLeft"></div>
+<div class="curtain-right" id="curtainRight"></div>
 
+<!-- MAIN SITE -->
 <section class="site" id="site">
+<img src="Maisondusport-file.png" class="top-logo" id="mainLogo">
 
-<div class="statement">The Maison — Where Football Meets Elegance</div>
-
-<div style="text-align:center;">
-<div class="notice">This page is a digital showcase room</div>
+<!-- Nav bar -->
+<div class="navbar" id="navbar">
+<a href="#jersey">Jersey</a>
+<a href="#maison">The Maison</a>
+<a href="#contact">Contact</a>
 </div>
 
-<div class="section-title">Jersey Collection</div>
+<div class="warning-box">This page is a showcase room</div>
+
+<div class="statement">The Maison — where football meets elegance</div>
+
+<!-- PRODUCTS -->
+<h2 id="jersey" style="margin-top:60px;">Jersey</h2>
 <div class="products">
-<div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png"><h3>Luxury Match Jersey</h3><p>$40</p></div>
-<div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png"><h3>Elite Training Tee</h3><p>$35</p></div>
-<div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png"><h3>Football Luxe</h3><p>$50</p></div>
-<div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png"><h3>Minimal Pro Fit</h3><p>$30</p></div>
+<div class="card"><img src="shirt-file.png"><h3>Luxury Match Jersey</h3></div>
+<div class="card"><img src="shirt-file.png"><h3>Elite Training Tee</h3></div>
+<div class="card"><img src="shirt-file.png"><h3>Football Luxe</h3></div>
+<div class="card"><img src="shirt-file.png"><h3>Minimal Pro Fit</h3></div>
 </div>
 
-<div class="section-title">Maison Gallery</div>
+<!-- Maison Gallery -->
+<div id="maison" class="maison-gallery">
+<h2>The Maison Gallery</h2>
 <div class="gallery">
-<div class="card"><span>CONCEPT</span><img src="Store-file.png"></div>
-<div class="card"><span>CONCEPT</span><img src="Store-file.png"></div>
+<div class="concept-card"><img src="Store-file.png"></div>
+<div class="concept-card"><img src="Store-file.png"></div>
+</div>
 </div>
 
-<div class="section-title">Contact</div>
-<div class="contact">
-Email: contactmaisondusport@gmail.com<br>
-Phone: +509 4720 9775
+<!-- Contact -->
+<div id="contact" class="section">
+<h2>Contact</h2>
+<div class="lux-line"></div>
+<p>Email: contactmaisondusport@gmail.com</p>
+<p>Phone: +509 4720 9775</p>
 </div>
 
-</section>
+<footer>
+Maison du Sport — Digital Showroom Concept<br>
+Online Releases Only • Physical Experience Coming Soon
+</footer>
 
 <script>
 function enterMaison(){
-document.body.classList.add("open");
-setTimeout(()=>{
 document.getElementById("intro").style.display="none";
-document.getElementById("site").classList.add("visible");
 document.body.style.overflow="auto";
-},1200);
+document.getElementById("site").style.display="block";
+document.getElementById("navbar").style.display="flex";
+
+/* Animate curtains */
+setTimeout(()=>{document.getElementById("curtainLeft").style.width="0"; document.getElementById("curtainRight").style.width="0";}, 100);
+setTimeout(()=>{document.getElementById("curtainLeft").style.display="none"; document.getElementById("curtainRight").style.display="none";}, 1600);
 }
 </script>
 
