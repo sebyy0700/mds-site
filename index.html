@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Maison du Sport — Digital Maison</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison du Sport</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-
-/* ================= BASE ================= */
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Montserrat,sans-serif;background:#0c1a2b;overflow:hidden}
-h1,h2,h3{font-family:'Playfair Display',serif;font-weight:600}
+body{font-family:Montserrat,sans-serif;overflow:hidden}
+h1,h2,h3{font-family:'Playfair Display',serif}
 html{scroll-behavior:smooth}
 
 /* ================= INTRO ================= */
 .intro{
 position:fixed;
 inset:0;
-background:#0c1a2b;
+background:#0b1d35;
 color:white;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-z-index:10;
-overflow:hidden;
+text-align:center;
+z-index:5;
 }
 
 .intro h1{
-font-size:3.8rem;
-letter-spacing:2px;
-animation:fadeGlow 3s ease forwards;
-text-align:center;
+font-size:3.5rem;
+animation:fadeIn 2s ease forwards;
 }
 
-@keyframes fadeGlow{
-0%{opacity:0;transform:translateY(20px)}
-100%{opacity:1;transform:translateY(0);text-shadow:0 0 40px rgba(255,255,255,0.25)}
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 .enter-btn{
@@ -47,189 +43,128 @@ padding:14px 50px;
 border:1px solid white;
 background:none;
 color:white;
-font-size:1rem;
-letter-spacing:2px;
 cursor:pointer;
-transition:0.4s;
+font-size:1rem;
+transition:.3s;
 }
-.enter-btn:hover{
-background:white;
-color:#0c1a2b;
-}
+.enter-btn:hover{background:white;color:#0b1d35}
 
-/* Curtain effect */
+/* Curtains */
 .curtain{
 position:fixed;
 top:0;
 width:50%;
 height:100%;
-background:#0c1a2b;
-z-index:11;
-transition:1.4s cubic-bezier(.77,0,.18,1);
+background:#0b1d35;
+z-index:6;
+transition:1.2s ease;
 }
 .left{left:0}
 .right{right:0}
-
 .open .left{transform:translateX(-100%)}
 .open .right{transform:translateX(100%)}
 
 /* ================= MAIN SITE ================= */
 .site{
 display:none;
-background:#f6f1e8;
-color:#0c1a2b;
+background:#f5efe6;
+color:#0b1d35;
 min-height:100vh;
-padding:120px 8% 80px;
+padding:120px 8% 60px;
 }
 
-/* Logo */
 .logo{
 position:fixed;
 top:25px;
-left:40px;
-width:130px;
+left:35px;
+width:120px;
 }
 
-/* Nav */
 .nav{
 position:fixed;
 top:35px;
-right:50px;
+right:40px;
 display:flex;
 gap:40px;
-font-weight:500;
 display:none;
 }
 .nav a{
 text-decoration:none;
-color:#0c1a2b;
-position:relative;
+color:#0b1d35;
+font-weight:500;
 }
-.nav a::after{
-content:"";
-position:absolute;
-width:0;
-height:1px;
-background:#0c1a2b;
-left:0;
-bottom:-5px;
-transition:.3s;
-}
-.nav a:hover::after{width:100%}
 
-/* Statement */
 .statement{
 text-align:center;
-font-size:2.2rem;
-margin-bottom:40px;
+font-size:2rem;
+margin-bottom:60px;
 }
 
-/* Warning box */
 .notice{
 position:absolute;
-top:110px;
+top:100px;
 left:40px;
-border:1px solid #0c1a2b;
-padding:8px 14px;
-font-size:.8rem;
-letter-spacing:1px;
+border:1px solid #0b1d35;
+padding:6px 12px;
+font-size:.75rem;
 }
 
-/* Section styling */
-.section{margin-top:120px}
-.section-title{
-font-size:1.8rem;
-margin-bottom:50px;
-text-align:center;
-}
+/* Sections */
+.section{margin-top:100px}
+.section-title{text-align:center;font-size:1.8rem;margin-bottom:40px}
 
-/* PRODUCTS */
+/* Product Cards */
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:60px;
+gap:50px;
 }
-
-.card{
-text-align:center;
-position:relative;
-}
-.card img{
-width:100%;
-border-radius:8px;
-box-shadow:0 15px 40px rgba(0,0,0,0.08);
-}
-.card h3{margin-top:15px;font-size:1.1rem}
-.card p{font-size:.9rem;margin-top:5px}
-
+.card{text-align:center;position:relative}
+.card img{width:100%;border-radius:8px}
 .badge{
 position:absolute;
 top:10px;
 left:10px;
-font-size:.7rem;
-background:#0c1a2b;
+background:#0b1d35;
 color:white;
+font-size:.7rem;
 padding:5px 8px;
 }
 
-/* MAISON GALLERY */
+/* Gallery */
 .gallery{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:70px;
+gap:60px;
 }
-
-.concept{
-position:relative;
-text-align:center;
-}
-.concept img{
-width:100%;
-border-radius:8px;
-box-shadow:0 15px 40px rgba(0,0,0,0.08);
-}
+.concept{position:relative;text-align:center}
 .concept span{
 position:absolute;
 top:12px;
 left:12px;
-background:#0c1a2b;
+background:#0b1d35;
 color:white;
 font-size:.7rem;
 padding:5px 8px;
 }
 
-/* CONTACT */
-.contact{
-text-align:center;
-font-size:1rem;
-line-height:2;
-margin-top:80px;
-}
+/* Contact */
+.contact{text-align:center;line-height:2}
 
-/* Footer */
-footer{
-text-align:center;
-margin-top:100px;
-font-size:.8rem;
-opacity:.6;
-}
-
+footer{text-align:center;margin-top:100px;font-size:.8rem;opacity:.6}
 </style>
 </head>
 
 <body>
 
-<!-- CURTAINS -->
 <div class="curtain left"></div>
 <div class="curtain right"></div>
 
-<!-- INTRO -->
 <div class="intro" id="intro">
 <h1>Welcome to Maison du Sport</h1>
 <button class="enter-btn" onclick="enterMaison()">Enter the Maison</button>
 </div>
 
-<!-- MAIN -->
 <div class="site" id="site">
 
 <img src="Maisondusport-file.png" class="logo">
@@ -244,53 +179,24 @@ opacity:.6;
 
 <div class="statement">The Maison where football meets elegance</div>
 
-<!-- JERSEY SECTION -->
 <div class="section" id="jersey">
 <div class="section-title">Jersey</div>
 <div class="products">
-<div class="card">
-<span class="badge">Exclusively Online</span>
-<img src="shirt-file.png">
-<h3>The Maison Jersey</h3>
-<p>$45</p>
-</div>
-<div class="card">
-<span class="badge">Exclusively Online</span>
-<img src="shirt-file.png">
-<h3>Midnight Performance</h3>
-<p>$50</p>
-</div>
-<div class="card">
-<span class="badge">Exclusively Online</span>
-<img src="shirt-file.png">
-<h3>Elite Field Edition</h3>
-<p>$55</p>
-</div>
-<div class="card">
-<span class="badge">Exclusively Online</span>
-<img src="shirt-file.png">
-<h3>Signature Cut</h3>
-<p>$48</p>
-</div>
+<div class="card"><span class="badge">Exclusively Online</span><img src="shirt-file.png"><h3>Maison Jersey</h3><p>$45</p></div>
+<div class="card"><span class="badge">Exclusively Online</span><img src="shirt-file.png"><h3>Midnight Edition</h3><p>$50</p></div>
+<div class="card"><span class="badge">Exclusively Online</span><img src="shirt-file.png"><h3>Elite Performance</h3><p>$55</p></div>
+<div class="card"><span class="badge">Exclusively Online</span><img src="shirt-file.png"><h3>Signature Fit</h3><p>$48</p></div>
 </div>
 </div>
 
-<!-- MAISON GALLERY -->
 <div class="section" id="maison">
 <div class="section-title">Maison Gallery</div>
 <div class="gallery">
-<div class="concept">
-<span>Concept</span>
-<img src="Store-file.png">
-</div>
-<div class="concept">
-<span>Concept</span>
-<img src="Store-file.png">
-</div>
+<div class="concept"><span>Concept</span><img src="Store-file.png"></div>
+<div class="concept"><span>Concept</span><img src="Store-file.png"></div>
 </div>
 </div>
 
-<!-- CONTACT -->
 <div class="section contact" id="contact">
 <div class="section-title">Contact</div>
 <p>Email: contactmaisondusport@gmail.com</p>
@@ -298,7 +204,6 @@ opacity:.6;
 </div>
 
 <footer>Maison du Sport — Digital Luxury Showroom</footer>
-
 </div>
 
 <script>
@@ -309,12 +214,12 @@ document.getElementById("intro").style.display="none";
 document.getElementById("site").style.display="block";
 document.getElementById("nav").style.display="flex";
 document.body.style.overflow="auto";
-},1200);
+},1100);
 }
 </script>
 
 </body>
 </html>
-0b
+
 
 
