@@ -28,7 +28,6 @@ body{
   overflow:hidden;
 }
 
-/* Intro Video */
 .intro video{
   position:absolute;
   top:0;
@@ -100,47 +99,43 @@ body{
 .open .left-curtain{transform:translateX(-100%)}
 .open .right-curtain{transform:translateX(100%)}
 
-/* ================= HERO SCROLL SECTION ================= */
-.hero-section {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+/* ================= HERO STICKY SECTION ================= */
+.hero-wrapper{
+  position:relative;
+  height:200vh; /* Twice the viewport height for scroll effect */
+  overflow:hidden;
 }
 
-.hero-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.hero-section{
+  position:sticky;
+  top:0;
+  height:100vh;
+  width:100%;
+  overflow:hidden;
 }
 
-.hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+.hero-img{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  top:0;
+  left:0;
+  transition:transform 1s ease;
 }
 
-.hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.hero-text {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  color: #f6f1e8;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 1;
-  transition: opacity 0.6s;
-  z-index: 2;
+.hero-text{
+  position:absolute;
+  width:100%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Playfair Display', serif;
+  font-size:3rem;
+  text-align:center;
+  color:#f6f1e8;
+  z-index:2;
+  transition:opacity 0.6s ease, transform 0.6s ease;
 }
 
 /* ================= MAIN SITE ================= */
@@ -150,7 +145,7 @@ body{
   padding:60px 10%;
   max-width:1300px;
   margin:auto;
-  background:#800020; /* Burgundy/red background */
+  background:#800020;
   position:relative;
   z-index:1;
   color:#f6f1e8;
@@ -263,6 +258,7 @@ body{
   color:#f6f1e8;
 }
 
+/* Animations */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:translateY(0)}
@@ -270,11 +266,6 @@ body{
 @keyframes underline{
   from{transform:scaleX(0.6)}
   to{transform:scaleX(1)}
-}
-
-/* ================= PARALLAX EFFECT ================= */
-[data-parallax] {
-  transition: transform 0.1s linear;
 }
 </style>
 </head>
@@ -295,24 +286,21 @@ body{
 <img src="Maisondusport-file.png" class="logo" alt="Maison du Sport Logo">
 
 <!-- Hero Scroll Section -->
-<section class="hero-section">
-  <div class="hero-container">
-    <div class="hero-image" id="hero1">
-      <img src="OM-file.png.jpeg" alt="The Maison">
-      <div class="hero-text" id="text1">The Maison</div>
-    </div>
-    <div class="hero-image" id="hero2">
-      <img src="Old-file.png.jpeg" alt="Where Football Meets Elegance">
-      <div class="hero-text" id="text2">Where Football Meets Elegance</div>
-    </div>
+<div class="hero-wrapper" id="heroWrapper" style="display:none;">
+  <div class="hero-section">
+    <img src="OM-file.png.jpeg" class="hero-img" id="heroImg1" alt="First Image">
+    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" alt="Second Image" style="opacity:0">
+    <div class="hero-text" id="heroText">The Maison</div>
   </div>
-</section>
+</div>
 
 <!-- Main Site -->
 <section class="site" id="site">
+  <div class="notice">This page is a digital showcase room</div>
+
   <!-- Jersey Collection -->
   <div class="section-title">Jersey Collection</div>
-  <div class="products" data-parallax>
+  <div class="products">
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Luxury Match Jersey"><h3>Luxury Match Jersey</h3></div>
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Elite Training Tee"><h3>Elite Training Tee</h3></div>
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Football Luxe"><h3>Football Luxe</h3></div>
@@ -321,7 +309,7 @@ body{
 
   <!-- Maison Gallery -->
   <div class="section-title">Maison Gallery</div>
-  <div class="gallery" data-parallax>
+  <div class="gallery">
     <div class="card"><span>CONCEPT</span><img src="Store-file.png.jpeg" alt="Maison Concept"></div>
     <div class="card"><span>CONCEPT</span><img src="Store-file.png.jpeg" alt="Maison Concept"></div>
   </div>
@@ -339,30 +327,39 @@ function enterMaison(){
   document.body.classList.add("open");
   setTimeout(()=>{
     document.getElementById("intro").style.display="none";
-    document.getElementById("site").classList.add("visible");
+    document.getElementById("heroWrapper").style.display="block";
     document.body.style.overflow="auto";
   },1200);
 }
 
-/* ================= PARALLAX EFFECT ================= */
-const parallaxElements = document.querySelectorAll('[data-parallax]');
-window.addEventListener('scroll', () => {
-  parallaxElements.forEach(el => {
-    const offset = window.pageYOffset;
-    el.style.transform = `translateY(${offset * 0.05}px)`;
-  });
-});
-
 /* ================= HERO SCROLL ANIMATION ================= */
-window.addEventListener('scroll', () => {
-  const hero = document.querySelector('.hero-section');
-  const heroHeight = hero.offsetHeight;
-  const scrollY = window.scrollY;
-  const progress = Math.min(scrollY / heroHeight, 1);
+const heroWrapper = document.getElementById('heroWrapper');
+const heroImg1 = document.getElementById('heroImg1');
+const heroImg2 = document.getElementById('heroImg2');
+const heroText = document.getElementById('heroText');
+const site = document.getElementById('site');
 
-  document.getElementById('hero2').style.transform = `translateY(${100 - progress * 100}%)`;
-  document.getElementById('text1').style.opacity = `${1 - progress}`;
-  document.getElementById('text2').style.opacity = `${progress}`;
+window.addEventListener('scroll', ()=>{
+  if(heroWrapper.style.display !== "block") return;
+  const rect = heroWrapper.getBoundingClientRect();
+  const progress = Math.min(Math.max(-rect.top / window.innerHeight,0),1);
+
+  // Image transitions
+  heroImg1.style.transform = `translateY(${progress*50}px)`;
+  heroImg2.style.transform = `translateY(${(1-progress)*50}px)`;
+  heroImg2.style.opacity = progress;
+
+  // Text transitions
+  heroText.style.opacity = 1 - progress/0.5;
+  if(progress>0.5){
+    heroText.innerText = "Where Football Meets Elegance";
+    heroText.style.opacity = (progress-0.5)/0.5;
+  }
+
+  // Show site after hero
+  if(progress >= 1){
+    site.classList.add('visible');
+  }
 });
 </script>
 </body>
