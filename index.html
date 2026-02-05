@@ -12,7 +12,7 @@ body{
   font-family:Montserrat, sans-serif;
   overflow:hidden;
   scroll-behavior:smooth;
-  background:#0b1a2b; /* Intro background */
+  background:#0b1a2b;
   color:#f6f1e8;
 }
 
@@ -27,12 +27,27 @@ body{
   z-index:10;
   overflow:hidden;
 }
+
+/* Intro Video */
+.intro video{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+  opacity:0.85; /* slightly darken for text readability */
+}
+
 .intro h1{
   font-family:'Playfair Display', serif;
   font-size:3.8rem;
   text-align:center;
   opacity:0;
   animation:fadeUp 2s forwards 0.5s;
+  position:relative;
+  z-index:1;
 }
 .intro h1 span{
   display:inline-block;
@@ -49,10 +64,6 @@ body{
   opacity:0.3;
   animation:underline 3s infinite alternate;
 }
-@keyframes underline{
-  from{transform:scaleX(0.6)}
-  to{transform:scaleX(1)}
-}
 
 .enter-btn{
   margin-top:3rem;
@@ -66,6 +77,8 @@ body{
   opacity:0;
   animation:fadeUp 2s forwards 2s;
   transition:.4s;
+  position:relative;
+  z-index:1;
 }
 .enter-btn:hover{
   background:#f6f1e8;
@@ -97,7 +110,7 @@ body{
   background:#800020; /* Burgundy/red background */
   position:relative;
   z-index:1;
-  color:#f6f1e8; /* Ensure text is readable */
+  color:#f6f1e8;
 }
 .site.visible{opacity:1}
 
@@ -144,34 +157,65 @@ body{
   gap:50px;
   margin-bottom:120px;
 }
+
+/* Card Styles with Hover Animation & Overlay */
 .card{
-  background:#a0002b; /* Slightly lighter burgundy for cards */
+  background:#a0002b;
   padding:25px;
   border-radius:6px;
   box-shadow:0 15px 40px rgba(0,0,0,0.08);
   text-align:center;
   position:relative;
-  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  transition:transform 0.4s ease, box-shadow 0.4s ease;
   color:#f6f1e8;
+  overflow:hidden;
 }
+
 .card img{
   width:100%;
   border-radius:4px;
   margin-bottom:15px;
+  transition:transform 0.4s ease;
 }
+
 .card span{
   position:absolute;
   top:12px;
   left:12px;
   font-size:0.65rem;
   letter-spacing:1px;
-  background:#5a0015; /* Darker accent for span */
+  background:#5a0015;
   color:#f6f1e8;
   padding:4px 8px;
 }
+
+/* Hover Effects */
 .card:hover{
-  transform:scale(1.03);
-  box-shadow:0 20px 60px rgba(0,0,0,0.12);
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 25px 70px rgba(0,0,0,0.2);
+}
+
+.card:hover img{
+  transform:scale(1.1);
+}
+
+.card::after{
+  content:"View Details";
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:6px 12px;
+  background:rgba(0,0,0,0.5);
+  color:#f6f1e8;
+  font-size:0.85rem;
+  border-radius:4px;
+  opacity:0;
+  transition:opacity 0.3s ease;
+}
+
+.card:hover::after{
+  opacity:1;
 }
 
 /* Maison Gallery */
@@ -196,6 +240,15 @@ body{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:translateY(0)}
 }
+@keyframes underline{
+  from{transform:scaleX(0.6)}
+  to{transform:scaleX(1)}
+}
+
+/* ================= PARALLAX EFFECT ================= */
+[data-parallax] {
+  transition: transform 0.1s linear;
+}
 </style>
 </head>
 <body>
@@ -206,6 +259,7 @@ body{
 
 <!-- Intro -->
 <section class="intro" id="intro">
+  <video src="Cinematic_video_focusing_202602011237_ga4dn.mp4" autoplay muted loop></video>
   <h1><span>Welcome to Maison du Sport</span></h1>
   <button class="enter-btn" onclick="enterMaison()">ENTER THE MAISON</button>
 </section>
@@ -220,7 +274,7 @@ body{
 
   <!-- Jersey Collection -->
   <div class="section-title">Jersey Collection</div>
-  <div class="products">
+  <div class="products" data-parallax>
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Luxury Match Jersey"><h3>Luxury Match Jersey</h3></div>
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Elite Training Tee"><h3>Elite Training Tee</h3></div>
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Football Luxe"><h3>Football Luxe</h3></div>
@@ -229,7 +283,7 @@ body{
 
   <!-- Maison Gallery -->
   <div class="section-title">Maison Gallery</div>
-  <div class="gallery">
+  <div class="gallery" data-parallax>
     <div class="card"><span>CONCEPT</span><img src="Store-file.png.jpeg" alt="Maison Concept"></div>
     <div class="card"><span>CONCEPT</span><img src="Store-file.png.jpeg" alt="Maison Concept"></div>
   </div>
@@ -251,6 +305,15 @@ function enterMaison(){
     document.body.style.overflow="auto";
   },1200);
 }
+
+/* ================= PARALLAX EFFECT JS ================= */
+const parallaxElements = document.querySelectorAll('[data-parallax]');
+window.addEventListener('scroll', () => {
+  parallaxElements.forEach(el => {
+    const offset = window.pageYOffset;
+    el.style.transform = `translateY(${offset * 0.05}px)`; // small parallax
+  });
+});
 </script>
 </body>
 </html>
