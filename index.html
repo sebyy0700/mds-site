@@ -6,317 +6,93 @@
 <title>Maison du Sport — Digital Showroom</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ================= GLOBAL ================= */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:Montserrat, sans-serif;
-  overflow:hidden;
-  scroll-behavior:smooth;
-  background:#0b1a2b;
-  color:#f6f1e8;
-}
+body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;background:#0b1a2b;color:#f6f1e8;}
 
-/* ================= INTRO ================= */
-.intro{
-  position:fixed;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:10;
-  overflow:hidden;
-}
-.intro video{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
-  opacity:0.85;
-}
-.intro h1{
-  font-family:'Playfair Display', serif;
-  font-size:3.8rem;
-  text-align:center;
-  opacity:0;
-  animation:fadeUp 2s forwards 0.5s;
-  position:relative;
-  z-index:1;
-}
-.intro h1 span{
-  display:inline-block;
-  position:relative;
-}
-.intro h1 span::after{
-  content:"";
-  position:absolute;
-  left:-10%;
-  bottom:-8px;
-  width:120%;
-  height:2px;
-  background:white;
-  opacity:0.3;
-  animation:underline 3s infinite alternate;
-}
-.enter-btn{
-  margin-top:3rem;
-  padding:1rem 3.5rem;
-  border:1px solid #f6f1e8;
-  background:none;
-  color:#f6f1e8;
-  font-size:1.1rem;
-  letter-spacing:2px;
-  cursor:pointer;
-  opacity:0;
-  animation:fadeUp 2s forwards 2s;
-  transition:.4s;
-  position:relative;
-  z-index:1;
-}
-.enter-btn:hover{
-  background:#f6f1e8;
-  color:#0b1a2b;
-}
+/* INTRO */
+.intro{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10;overflow:hidden;}
+.intro video{position:absolute;width:100%;height:100%;object-fit:cover;opacity:.85;}
+.intro h1{font-family:'Playfair Display',serif;font-size:3.8rem;text-align:center;opacity:0;animation:fadeUp 2s forwards .5s;z-index:1;}
+.enter-btn{margin-top:3rem;padding:1rem 3.5rem;border:1px solid #f6f1e8;background:none;color:#f6f1e8;font-size:1.1rem;letter-spacing:2px;cursor:pointer;opacity:0;animation:fadeUp 2s forwards 2s;transition:.4s;z-index:1;}
+.enter-btn:hover{background:#f6f1e8;color:#0b1a2b;}
 
-/* Curtain */
-.curtain{
-  position:fixed;
-  top:0;
-  width:50%;
-  height:100%;
-  background:#0b1a2b;
-  z-index:9;
-  transition:1.6s cubic-bezier(.77,0,.18,1);
-}
-.left-curtain{left:0}
-.right-curtain{right:0}
-.open .left-curtain{transform:translateX(-100%)}
-.open .right-curtain{transform:translateX(100%)}
+.curtain{position:fixed;top:0;width:50%;height:100%;background:#0b1a2b;z-index:9;transition:1.6s cubic-bezier(.77,0,.18,1);}
+.left-curtain{left:0}.right-curtain{right:0}
+.open .left-curtain{transform:translateX(-100%)} .open .right-curtain{transform:translateX(100%)}
 
-/* ================= HERO SECTION ================= */
-.hero-wrapper{
-  position:relative;
-  height:200vh; /* allow scroll for text change */
-}
-.hero-section{
-  position:sticky;
-  top:0;
-  height:100vh;
-  width:100%;
-  overflow:hidden;
-}
-.hero-img{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  top:0;
-  left:0;
-  transition:opacity 1s ease;
-}
-.hero-text{
-  position:absolute;
-  width:100%;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-family:'Playfair Display', serif;
-  font-size:3rem;
-  text-align:center;
-  color:#f6f1e8;
-  z-index:2;
-  transition:opacity 0.6s ease, transform 0.6s ease;
-}
+/* HERO */
+.hero-wrapper{position:relative;height:200vh;}
+.hero-section{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;}
+.hero-img{position:absolute;width:100%;height:100%;object-fit:cover;transition:opacity 1s ease;}
+.hero-text{position:absolute;width:100%;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:3rem;text-align:center;z-index:2;transition:opacity .6s ease;}
 
-/* ================= MAIN SITE ================= */
-.site{
-  opacity:0;
-  transition:opacity 1.5s ease;
-  padding:60px 10%;
-  max-width:1300px;
-  margin:auto;
-  background:#800020;
-  position:relative;
-  z-index:1;
-  color:#f6f1e8;
-}
+/* SITE */
+.site{opacity:0;transition:opacity 1.5s ease;padding:60px 10%;max-width:1300px;margin:auto;background:#800020;}
 .site.visible{opacity:1}
+.logo{position:fixed;top:25px;left:40px;width:130px;opacity:.85;z-index:2;}
+.notice{border:1px solid #f6f1e8;display:inline-block;padding:10px 18px;font-size:.85rem;letter-spacing:1px;margin-bottom:70px;opacity:0;transition:opacity 1s ease;}
+.notice.visible{opacity:1;}
+.section-title{text-align:center;font-size:2rem;margin-bottom:40px;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:50px;margin-bottom:120px;}
+.card{background:#a0002b;padding:25px;border-radius:6px;text-align:center;position:relative;transition:.4s;color:#f6f1e8;cursor:pointer;}
+.card img{width:100%;border-radius:4px;margin-bottom:15px;transition:.4s;}
+.card span{position:absolute;top:12px;left:12px;font-size:.65rem;background:#5a0015;padding:4px 8px;}
+.card:hover{transform:translateY(-10px) scale(1.05);}
+.card:hover img{transform:scale(1.1);}
+.card::after{content:"View Details";position:absolute;bottom:10px;left:50%;transform:translateX(-50%);padding:6px 12px;background:rgba(0,0,0,.5);font-size:.85rem;border-radius:4px;opacity:0;transition:.3s;}
+.card:hover::after{opacity:1;}
 
-.logo{
-  position:fixed;
-  top:25px;
-  left:40px;
-  width:130px;
-  opacity:0.85;
-  z-index:2;
-}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:60px;margin-bottom:120px;}
+.contact{text-align:center;margin-bottom:120px;line-height:2;}
 
-.notice{
-  border:1px solid #f6f1e8;
-  display:inline-block;
-  padding:10px 18px;
-  font-size:0.85rem;
-  letter-spacing:1px;
-  margin-bottom:70px;
-  color:#f6f1e8;
-  opacity:0;
-  transition:opacity 1s ease;
-}
-.notice.visible{
-  opacity:1;
-}
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;justify-content:center;align-items:center;z-index:50;opacity:0;pointer-events:none;transition:.4s;}
+.modal.active{opacity:1;pointer-events:auto;}
+.modal-content{width:90%;max-width:900px;background:#800020;padding:40px;border-radius:10px;text-align:center;position:relative;animation:fadeUp .5s ease;}
+.modal-content img{width:100%;max-height:400px;object-fit:cover;border-radius:6px;margin-bottom:25px;}
+.modal-price{font-size:1rem;letter-spacing:1px;margin-bottom:15px;opacity:.85;}
+.close-modal{position:absolute;top:15px;right:20px;font-size:1.5rem;cursor:pointer;}
 
-.section-title{
-  text-align:center;
-  font-size:2rem;
-  margin-bottom:40px;
-  color:#f6f1e8;
-}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:50px;
-  margin-bottom:120px;
-}
-
-.products .card{
-  opacity:0;
-  transform:translateY(30px);
-  transition:opacity 0.8s ease, transform 0.8s ease;
-}
-
-.products .card.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.card{
-  background:#a0002b;
-  padding:25px;
-  border-radius:6px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.08);
-  text-align:center;
-  position:relative;
-  transition:transform 0.4s ease, box-shadow 0.4s ease;
-  color:#f6f1e8;
-  overflow:hidden;
-}
-.card img{
-  width:100%;
-  border-radius:4px;
-  margin-bottom:15px;
-  transition:transform 0.4s ease;
-}
-.card span{
-  position:absolute;
-  top:12px;
-  left:12px;
-  font-size:0.65rem;
-  letter-spacing:1px;
-  background:#5a0015;
-  color:#f6f1e8;
-  padding:4px 8px;
-}
-.card:hover{
-  transform:translateY(-10px) scale(1.05);
-  box-shadow:0 25px 70px rgba(0,0,0,0.2);
-}
-.card:hover img{
-  transform:scale(1.1);
-}
-.card::after{
-  content:"View Details";
-  position:absolute;
-  bottom:10px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:6px 12px;
-  background:rgba(0,0,0,0.5);
-  color:#f6f1e8;
-  font-size:0.85rem;
-  border-radius:4px;
-  opacity:0;
-  transition:opacity 0.3s ease;
-}
-.card:hover::after{
-  opacity:1;
-}
-
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:60px;
-  margin-bottom:120px;
-}
-
-.contact{
-  text-align:center;
-  margin-bottom:120px;
-  line-height:2;
-  font-size:1rem;
-  color:#f6f1e8;
-}
-
-/* Animations */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes underline{
-  from{transform:scaleX(0.6)}
-  to{transform:scaleX(1)}
-}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 
-<!-- Curtains -->
 <div class="curtain left-curtain"></div>
 <div class="curtain right-curtain"></div>
 
-<!-- Intro -->
 <section class="intro" id="intro">
   <video src="Cinematic_video_focusing_202602011237_ga4dn.mp4" autoplay muted loop></video>
-  <h1><span>Welcome to Maison du Sport</span></h1>
+  <h1>Welcome to Maison du Sport</h1>
   <button class="enter-btn" onclick="enterMaison()">ENTER THE MAISON</button>
 </section>
 
-<!-- Logo -->
-<img src="Maisondusport-file.png" class="logo" alt="Maison du Sport Logo">
+<img src="Maisondusport-file.png" class="logo">
 
-<!-- Hero Section -->
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
   <div class="hero-section">
-    <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" alt="First Image" style="opacity:1">
-    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" alt="Second Image" style="opacity:0">
-    <div class="hero-text" id="heroText">Maison Where Football</div>
+    <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" style="opacity:1">
+    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" style="opacity:0">
+    <div class="hero-text" id="heroText">MAISON WHERE FOOTBALL</div>
   </div>
 </div>
 
-<!-- Main Site -->
 <section class="site" id="site">
   <div class="notice" id="notice">This page is a digital showcase room for viewing purposes only</div>
 
-  <!-- Jersey Collection -->
   <div class="section-title">World Cup Special</div>
   <div class="products" id="jerseyProducts">
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="Old2-file.png.jpeg" alt="1974 Tribute Tee"><h3>1974 Tribute Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="CW-file.png.jpeg" alt="Trainer Tee"><h3>Trainer Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WW-file.png.jpeg" alt="White Trainer Tee"><h3>White Trainer Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WC-file.png.jpeg" alt="World cup Jersey"><h3>World Cup Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="Old2-file.png.jpeg"><h3>1974 Tribute Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="CW-file.png.jpeg"><h3>Trainer Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WW-file.png.jpeg"><h3>White Trainer Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WC-file.png.jpeg"><h3>World Cup Tee</h3></div>
   </div>
 
-  <!-- Maison Gallery -->
   <div class="section-title">Maison Gallery</div>
   <div class="gallery">
-    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store-file.png.jpeg" alt="Maison Concept"></div>
+    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store-file.png.jpeg"><h3>Maison Concept</h3></div>
   </div>
 
-  <!-- Contact -->
   <div class="section-title">Contact</div>
   <div class="contact">
     Email: contactmaisondusport@gmail.com<br>
@@ -324,67 +100,72 @@ body{
   </div>
 </section>
 
+<!-- MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <div class="close-modal" onclick="closeModal()">✕</div>
+    <img id="modalImg">
+    <h2 id="modalTitle"></h2>
+    <div class="modal-price" id="modalPrice"></div>
+    <p id="modalDesc"></p>
+  </div>
+</div>
+
 <script>
 function enterMaison(){
   document.body.classList.add("open");
   setTimeout(()=>{
-    document.getElementById("intro").style.display="none";
-    document.getElementById("heroWrapper").style.display="block";
+    intro.style.display="none";
+    heroWrapper.style.display="block";
     document.body.style.overflow="auto";
   },1200);
 }
 
-/* ================= HERO SCROLL ================= */
-const heroImg1 = document.getElementById('heroImg1');
-const heroImg2 = document.getElementById('heroImg2');
-const heroText = document.getElementById('heroText');
-const site = document.getElementById('site');
-const notice = document.getElementById('notice');
-
-/* Jersey cards */
-const jerseyCards = document.querySelectorAll('#jerseyProducts .card');
-
+/* HERO SCROLL */
 window.addEventListener('scroll', ()=>{
-  if(document.getElementById('heroWrapper').style.display !== "block") return;
+  if(heroWrapper.style.display!=="block") return;
+  const progress=Math.min(window.scrollY/(window.innerHeight*0.8),1);
+  heroImg1.style.opacity=1-progress;
+  heroImg2.style.opacity=progress;
 
-  const scrollPos = window.scrollY;
-  const fadeStart = 0;
-  const fadeEnd = window.innerHeight * 0.8;
-  const progress = Math.min(Math.max((scrollPos - fadeStart)/(fadeEnd - fadeStart),0),1);
-
-  // Hero images fade
-  heroImg1.style.opacity = 1 - progress;
-  heroImg2.style.opacity = progress;
-
-  // Text changes smoothly
-  if(progress < 0.5){
-    heroText.innerText = "Maison Where Football";
-    heroText.style.opacity = 1 - progress*2;
-  } else {
-    heroText.innerText = "Meets Elegance";
-    heroText.style.opacity = (progress-0.5)*2;
+  if(progress<.5){
+    heroText.innerText="MAISON WHERE FOOTBALL";
+    heroText.style.opacity=1-progress*2;
+  }else{
+    heroText.innerText="MEET ELEGANCE";
+    heroText.style.opacity=(progress-.5)*2;
   }
 
-  // Show notice and main site after hero
-  if(scrollPos > fadeEnd){
-    site.classList.add('visible');
-    notice.classList.add('visible');
-  } else {
-    notice.classList.remove('visible');
-  }
-
-  // Jersey cards fade in on scroll
-  jerseyCards.forEach((card, index)=>{
-    const rect = card.getBoundingClientRect();
-    if(rect.top < window.innerHeight * 0.85){
-      setTimeout(()=>card.classList.add('visible'), index*150);
-    }
-  });
+  if(window.scrollY>window.innerHeight*.8){site.classList.add('visible');notice.classList.add('visible');}
 });
+
+/* PRODUCT DATA */
+const productData={
+ "1974 Tribute Tee":{price:"$45",desc:"Tribute to Haiti’s historic World Cup qualification."},
+ "Trainer Tee":{price:"$40",desc:"Special edition trainer tee to support the Grenadiers."},
+ "White Trainer Tee":{price:"$40",desc:"Classic white federation pride tee."},
+ "World Cup Tee":{price:"$50",desc:"Inspired by qualification match heritage."},
+ "Maison Concept":{price:"Concept Project",desc:"Future luxury football Maison space."}
+};
+
+/* CLICK */
+document.querySelectorAll('.card').forEach(card=>{
+ card.addEventListener('click',()=>{
+   const title=card.querySelector('h3').innerText;
+   const img=card.querySelector('img').src;
+   const data=productData[title];
+   modalImg.src=img;
+   modalTitle.innerText=title;
+   modalPrice.innerText=data.price;
+   modalDesc.innerText=data.desc;
+   productModal.classList.add('active');
+ });
+});
+function closeModal(){productModal.classList.remove('active');}
+productModal.addEventListener('click',e=>{if(e.target.id==='productModal')closeModal();});
 </script>
 </body>
 </html>
-
 
 
 
