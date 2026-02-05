@@ -120,6 +120,7 @@ body{
   object-fit:cover;
   top:0;
   left:0;
+  transition:opacity 1s ease; /* smooth fade */
 }
 
 .hero-text{
@@ -167,6 +168,12 @@ body{
   letter-spacing:1px;
   margin-bottom:70px;
   color:#f6f1e8;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+.notice.visible{
+  opacity:1;
 }
 
 .section-title{
@@ -286,15 +293,15 @@ body{
 <!-- Hero Section -->
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
   <div class="hero-section">
-    <img src="OM-file.png.jpeg" class="hero-img" id="heroImg1" alt="First Image">
-    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" alt="Second Image" style="display:none">
+    <img src="OM-file.png.jpeg" class="hero-img" id="heroImg1" alt="First Image" style="opacity:1">
+    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" alt="Second Image" style="opacity:0">
     <div class="hero-text" id="heroText">The Maison</div>
   </div>
 </div>
 
 <!-- Main Site -->
 <section class="site" id="site">
-  <div class="notice">This page is a digital showcase room</div>
+  <div class="notice" id="notice">This page is a digital showcase room</div>
 
   <!-- Jersey Collection -->
   <div class="section-title">Jersey Collection</div>
@@ -330,36 +337,45 @@ function enterMaison(){
   },1200);
 }
 
-/* ================= TEXT ANIMATION ON SCROLL ================= */
-const heroWrapper = document.getElementById('heroWrapper');
+/* ================= HERO SCROLL ================= */
 const heroImg1 = document.getElementById('heroImg1');
 const heroImg2 = document.getElementById('heroImg2');
 const heroText = document.getElementById('heroText');
 const site = document.getElementById('site');
+const notice = document.getElementById('notice');
 
 window.addEventListener('scroll', ()=>{
-  if(heroWrapper.style.display !== "block") return;
+  if(document.getElementById('heroWrapper').style.display !== "block") return;
 
   const scrollPos = window.scrollY;
-  const switchPoint = window.innerHeight * 0.8; // scroll threshold
+  const fadeStart = 0;
+  const fadeEnd = window.innerHeight * 0.8;
+  const progress = Math.min(Math.max((scrollPos - fadeStart)/(fadeEnd - fadeStart),0),1);
 
-  if(scrollPos > switchPoint){
-    heroImg1.style.display = "none";
-    heroImg2.style.display = "block";
-    heroText.innerText = "Where Football Meets Elegance";
-  } else {
-    heroImg1.style.display = "block";
-    heroImg2.style.display = "none";
+  // Fade images
+  heroImg1.style.opacity = 1 - progress;
+  heroImg2.style.opacity = progress;
+
+  // Text changes smoothly
+  if(progress < 0.5){
     heroText.innerText = "The Maison";
+    heroText.style.opacity = 1 - progress*2;
+  } else {
+    heroText.innerText = "Where Football Meets Elegance";
+    heroText.style.opacity = (progress-0.5)*2;
   }
 
-  // Show site after hero section
-  if(scrollPos > window.innerHeight){
+  // Show notice and main site after hero
+  if(scrollPos > fadeEnd){
     site.classList.add('visible');
+    notice.classList.add('visible');
+  } else {
+    notice.classList.remove('visible');
   }
 });
 </script>
 </body>
 </html>
+
 
 
