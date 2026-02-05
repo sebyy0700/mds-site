@@ -27,7 +27,6 @@ body{
   z-index:10;
   overflow:hidden;
 }
-
 .intro video{
   position:absolute;
   top:0;
@@ -38,7 +37,6 @@ body{
   z-index:0;
   opacity:0.85;
 }
-
 .intro h1{
   font-family:'Playfair Display', serif;
   font-size:3.8rem;
@@ -63,7 +61,6 @@ body{
   opacity:0.3;
   animation:underline 3s infinite alternate;
 }
-
 .enter-btn{
   margin-top:3rem;
   padding:1rem 3.5rem;
@@ -104,7 +101,6 @@ body{
   position:relative;
   height:200vh; /* allow scroll for text change */
 }
-
 .hero-section{
   position:sticky;
   top:0;
@@ -112,7 +108,6 @@ body{
   width:100%;
   overflow:hidden;
 }
-
 .hero-img{
   position:absolute;
   width:100%;
@@ -120,9 +115,8 @@ body{
   object-fit:cover;
   top:0;
   left:0;
-  transition:opacity 1s ease; /* smooth fade */
+  transition:opacity 1s ease;
 }
-
 .hero-text{
   position:absolute;
   width:100%;
@@ -171,7 +165,6 @@ body{
   opacity:0;
   transition:opacity 1s ease;
 }
-
 .notice.visible{
   opacity:1;
 }
@@ -190,6 +183,17 @@ body{
   margin-bottom:120px;
 }
 
+.products .card{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+
+.products .card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
 .card{
   background:#a0002b;
   padding:25px;
@@ -201,14 +205,12 @@ body{
   color:#f6f1e8;
   overflow:hidden;
 }
-
 .card img{
   width:100%;
   border-radius:4px;
   margin-bottom:15px;
   transition:transform 0.4s ease;
 }
-
 .card span{
   position:absolute;
   top:12px;
@@ -219,16 +221,13 @@ body{
   color:#f6f1e8;
   padding:4px 8px;
 }
-
 .card:hover{
   transform:translateY(-10px) scale(1.05);
   box-shadow:0 25px 70px rgba(0,0,0,0.2);
 }
-
 .card:hover img{
   transform:scale(1.1);
 }
-
 .card::after{
   content:"View Details";
   position:absolute;
@@ -243,7 +242,6 @@ body{
   opacity:0;
   transition:opacity 0.3s ease;
 }
-
 .card:hover::after{
   opacity:1;
 }
@@ -304,12 +302,12 @@ body{
   <div class="notice" id="notice">This page is a digital showcase room</div>
 
   <!-- Jersey Collection -->
-  <div class="section-title">Jersey Collection</div>
-  <div class="products">
+  <div class="section-title">World Cup Special</div>
+  <div class="products" id="jerseyProducts">
     <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Luxury Match Jersey"><h3>Luxury Match Jersey</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Elite Training Tee"><h3>Elite Training Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Football Luxe"><h3>Football Luxe</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="shirt-file.png.jpeg" alt="Minimal Pro Fit"><h3>Minimal Pro Fit</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="CW-file.png.jpeg" alt="CW Jersey"><h3>CW Jersey</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WW-file.png.jpeg" alt="WW Jersey"><h3>WW Jersey</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WC-file.png.jpeg" alt="WC Jersey"><h3>WC Jersey</h3></div>
   </div>
 
   <!-- Maison Gallery -->
@@ -344,6 +342,9 @@ const heroText = document.getElementById('heroText');
 const site = document.getElementById('site');
 const notice = document.getElementById('notice');
 
+/* Jersey cards */
+const jerseyCards = document.querySelectorAll('#jerseyProducts .card');
+
 window.addEventListener('scroll', ()=>{
   if(document.getElementById('heroWrapper').style.display !== "block") return;
 
@@ -352,7 +353,7 @@ window.addEventListener('scroll', ()=>{
   const fadeEnd = window.innerHeight * 0.8;
   const progress = Math.min(Math.max((scrollPos - fadeStart)/(fadeEnd - fadeStart),0),1);
 
-  // Fade images
+  // Hero images fade
   heroImg1.style.opacity = 1 - progress;
   heroImg2.style.opacity = progress;
 
@@ -372,10 +373,19 @@ window.addEventListener('scroll', ()=>{
   } else {
     notice.classList.remove('visible');
   }
+
+  // Jersey cards fade in on scroll
+  jerseyCards.forEach((card, index)=>{
+    const rect = card.getBoundingClientRect();
+    if(rect.top < window.innerHeight * 0.85){
+      setTimeout(()=>card.classList.add('visible'), index*150);
+    }
+  });
 });
 </script>
 </body>
 </html>
+
 
 
 
