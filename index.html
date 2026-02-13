@@ -4,25 +4,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maison du Sport — Digital Showroom</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;background:#0b1a2b;color:#D4AF37;}
 
-/* ORIGINAL STYLES */
-.intro{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10;overflow:hidden;}
-.intro video{position:absolute;width:100%;height:100%;object-fit:cover;opacity:.85;}
-.intro h1{font-family:'Playfair Display',serif;font-size:3.8rem;text-align:center;opacity:0;animation:fadeUp 2s forwards .5s;z-index:1;}
-.enter-btn{margin-top:3rem;padding:1rem 3.5rem;border:1px solid #f6f1e8;background:none;color:#f6f1e8;font-size:1.1rem;letter-spacing:2px;cursor:pointer;opacity:0;animation:fadeUp 2s forwards 2s;transition:.4s;z-index:1;}
+body{
+  font-family:Montserrat,sans-serif;
+  scroll-behavior:smooth;
+  background:#0b1a2b;
+  color:#D4AF37;
+  overflow:hidden; /* locked during intro */
+}
+
+/* INTRO */
+.intro{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+  overflow:hidden;
+  transition:opacity 1.2s ease;
+}
+.intro.fade-out{opacity:0;}
+
+.intro video{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.85;
+  preload:metadata;
+}
+
+.intro h1{
+  font-family:'Playfair Display',serif;
+  font-size:3.8rem;
+  text-align:center;
+  opacity:0;
+  animation:fadeUp 2s forwards .5s;
+  z-index:1;
+}
+
+.enter-btn{
+  margin-top:3rem;
+  padding:1rem 3.5rem;
+  border:1px solid #f6f1e8;
+  background:none;
+  color:#f6f1e8;
+  font-size:1.1rem;
+  letter-spacing:2px;
+  cursor:pointer;
+  opacity:0;
+  animation:fadeUp 2s forwards 2s;
+  transition:.4s;
+  z-index:1;
+}
 .enter-btn:hover{background:#f6f1e8;color:#0b1a2b;}
 
-.curtain{position:fixed;top:0;width:50%;height:100%;background:#0b1a2b;z-index:9;transition:1.6s cubic-bezier(.77,0,.18,1);}
-.left-curtain{left:0}.right-curtain{right:0}
-.open .left-curtain{transform:translateX(-100%)} 
+/* CURTAINS */
+.curtain{
+  position:fixed;
+  top:0;
+  width:50%;
+  height:100%;
+  background:#0b1a2b;
+  z-index:9;
+  transition:1.6s cubic-bezier(.77,0,.18,1);
+}
+.left-curtain{left:0}
+.right-curtain{right:0}
+.open .left-curtain{transform:translateX(-100%)}
 .open .right-curtain{transform:translateX(100%)}
 
-.hero-wrapper{position:relative;height:200vh;}
+/* HERO */
+.hero-wrapper{position:relative;height:200vh;display:none;}
 .hero-section{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;}
 .hero-img{position:absolute;width:100%;height:100%;object-fit:cover;transition:opacity 1s ease;}
 .hero-text{
@@ -35,13 +95,23 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
   font-size:3rem;
   text-align:center;
   z-index:2;
-  transition:opacity .6s ease, color .6s ease, text-shadow .6s ease;
+  transition:opacity .6s ease, color .6s ease, text-shadow .6s ease, top .6s ease;
 }
 
-.site{opacity:0;transition:opacity 1.5s ease;padding:60px 10%;max-width:1300px;margin:auto;background:#800020;}
+/* SITE */
+.site{
+  opacity:0;
+  transition:opacity 1.5s ease;
+  padding:60px 10%;
+  max-width:1300px;
+  margin:auto;
+  background:#800020;
+}
 .site.visible{opacity:1}
+
 .logo{position:fixed;top:25px;left:40px;width:210px;opacity:.85;z-index:2;}
 
+/* NOTICE */
 .notice{
   text-align:center;
   margin:0 auto 80px;
@@ -63,6 +133,7 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 
 .section-title{text-align:center;font-size:2rem;margin-bottom:40px;}
 
+/* PRODUCTS */
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:50px;margin-bottom:120px;}
 .card{background:#a0002b;padding:25px;border-radius:6px;text-align:center;position:relative;transition:.4s;color:#f6f1e8;cursor:pointer;}
 .card img{width:100%;border-radius:4px;margin-bottom:15px;transition:.4s;}
@@ -86,11 +157,8 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 }
 .card:hover::after{opacity:1;}
 
-/* ===== Announcement on Product Cards ===== */
-.card-wrapper {
-  position: relative;
-  display: inline-block;
-}
+/* CARD ANNOUNCEMENT */
+.card-wrapper {position: relative;display: inline-block;}
 .card-announcement {
   position: absolute;
   top: -18px;
@@ -107,6 +175,7 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
   z-index: 5;
 }
 
+/* GALLERY */
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:60px;margin-bottom:120px;}
 .contact{text-align:center;margin-bottom:120px;line-height:2;}
 
@@ -123,22 +192,26 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
   text-align:center;
 }
 
-/* NAVIGATION */
+/* NAVIGATION — MOBILE SWIPE FIX */
 .top-nav{
   position:fixed;
   top:0;
   left:0;
   width:100%;
   display:flex;
-  justify-content:center;
-  gap:60px;
-  padding:20px 0;
-  background:rgba(11,26,43,0.9);
+  justify-content:flex-start;
+  gap:40px;
+  padding:20px 20px;
+  background:rgba(11,26,43,0.95);
   backdrop-filter:blur(8px);
   z-index:50;
   transform:translateY(-100%);
   transition:transform .6s ease;
+  overflow-x:auto;
+  white-space:nowrap;
+  scrollbar-width:none;
 }
+.top-nav::-webkit-scrollbar{display:none;}
 .top-nav.visible{transform:translateY(0);}
 .top-nav a{
   text-decoration:none;
@@ -147,9 +220,10 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
   letter-spacing:1px;
   font-size:1rem;
   transition:.3s;
+  flex:0 0 auto;
 }
 .top-nav a:hover{opacity:.6;}
-.top-nav a.active{ text-decoration:underline; }
+.top-nav a.active{text-decoration:underline;}
 
 .gallery-overlay {
   position: fixed;
@@ -187,7 +261,7 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 <div class="curtain right-curtain"></div>
 
 <section class="intro" id="intro">
-  <video autoplay muted loop playsinline preload="auto">
+  <video autoplay muted loop playsinline>
     <source src="Cinematic_video_focusing_202602011237_ga4dn.mp4" type="video/mp4">
   </video> 
   <h1>Welcome to Maison du Sport</h1>
@@ -203,7 +277,7 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
   <a href="#contact">Contact</a>
 </nav>
 
-<div class="hero-wrapper" id="heroWrapper" style="display:none;">
+<div class="hero-wrapper" id="heroWrapper">
   <div class="hero-section">
     <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1">
     <img src="Sit-png.png" class="hero-img" id="heroImg2" style="opacity:0">
@@ -246,14 +320,6 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
       </div>
     </div>
 
-    <!-- 1974 Kit — NO promo -->
-    <div class="card">
-      <span>EXCLUSIVELY ONLINE</span>
-      <span class="price">$120</span>
-      <img src="1974shirt-png.png">
-      <h3>Red Haiti Men's Soccer Jersey- 1974 Commemorative Edition</h3>
-    </div>
-
     <!-- Blue Kit -->
     <div class="card-wrapper">
       <div class="card-announcement">First 20 Pieces — $85</div>
@@ -265,6 +331,14 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
       </div>
     </div>
 
+    <!-- 1974 Kit — NO promo -->
+    <div class="card">
+      <span>EXCLUSIVELY ONLINE</span>
+      <span class="price">$120</span>
+      <img src="1974shirt-png.png">
+      <h3>Red Haiti Men's Soccer Jersey- 1974 Commemorative Edition</h3>
+    </div>
+    
     <!-- Cap -->
     <div class="card">
       <span>EXCLUSIVELY ONLINE</span>
@@ -306,6 +380,7 @@ const topNav = document.getElementById('topNav');
 
 function enterMaison(){
   document.body.classList.add("open");
+  intro.classList.add('fade-out');
   setTimeout(()=>{
     intro.style.display="none";
     heroWrapper.style.display="block";
@@ -324,6 +399,7 @@ window.addEventListener('scroll',()=>{
     heroText.style.color = "#D4AF37"; // Gold
     heroText.style.textShadow = "0 0 20px rgba(212,175,55,0.6)";
     heroText.style.opacity = 1 - (p*2);
+    heroText.style.top = "30%";
   } else {
     heroText.innerText = "MEETS ELEGANCE";
     heroText.style.color = "#003153";
@@ -338,7 +414,7 @@ window.addEventListener('scroll',()=>{
     topNav.classList.add('visible');
   } else {
     topNav.classList.remove('visible');
-    heroText.style.top = "66%";
+    heroText.style.top = "30%";
   }
 });
 
@@ -380,6 +456,7 @@ document.querySelectorAll('img').forEach(img=>{ img.loading='lazy'; });
 
 </body>
 </html>
+
 
 
 
